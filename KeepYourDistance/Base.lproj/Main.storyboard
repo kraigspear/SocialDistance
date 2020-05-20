@@ -16,60 +16,55 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l3U-ux-HuT" customClass="PreviewView" customModule="KeepYourDistance" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
+                            <arscnView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NXZ-EN-7KB">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                            </arscnView>
+                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KQp-PW-CZk" userLabel="redLine">
+                                <rect key="frame" x="0.0" y="762" width="414" height="100"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KQp-PW-CZk" userLabel="redLine">
-                                        <rect key="frame" x="0.0" y="762" width="414" height="100"/>
-                                        <subviews>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wfq-Qw-dwf" userLabel="seperator">
-                                                <rect key="frame" x="0.0" y="0.0" width="414" height="3"/>
-                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="3" id="9by-cy-2Hc"/>
-                                                </constraints>
-                                            </view>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PEJ-VB-r2d" userLabel="distanceLabel">
-                                                <rect key="frame" x="174" y="10" width="66.333333333333314" height="33.666666666666664"/>
-                                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
-                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                        <color key="backgroundColor" name="Red"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wfq-Qw-dwf" userLabel="seperator">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="3"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <constraints>
-                                            <constraint firstItem="wfq-Qw-dwf" firstAttribute="top" secondItem="KQp-PW-CZk" secondAttribute="top" id="26n-ft-cwS"/>
-                                            <constraint firstItem="PEJ-VB-r2d" firstAttribute="centerX" secondItem="KQp-PW-CZk" secondAttribute="centerX" id="Jeg-jO-rqM"/>
-                                            <constraint firstAttribute="height" constant="100" id="TbO-Yw-cWe"/>
-                                            <constraint firstItem="wfq-Qw-dwf" firstAttribute="leading" secondItem="KQp-PW-CZk" secondAttribute="leading" id="btP-M0-HkB"/>
-                                            <constraint firstItem="PEJ-VB-r2d" firstAttribute="top" secondItem="KQp-PW-CZk" secondAttribute="top" constant="10" id="dSV-1p-JmQ"/>
-                                            <constraint firstAttribute="trailing" secondItem="wfq-Qw-dwf" secondAttribute="trailing" id="jqv-D9-Lw9"/>
+                                            <constraint firstAttribute="height" constant="3" id="9by-cy-2Hc"/>
                                         </constraints>
                                     </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PEJ-VB-r2d" userLabel="distanceLabel">
+                                        <rect key="frame" x="174" y="10" width="66.333333333333314" height="33.666666666666664"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" name="Red"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="KQp-PW-CZk" secondAttribute="trailing" id="7da-Ea-b7z"/>
-                                    <constraint firstItem="KQp-PW-CZk" firstAttribute="leading" secondItem="l3U-ux-HuT" secondAttribute="leading" id="oJw-rB-s7P"/>
-                                    <constraint firstAttribute="bottom" secondItem="KQp-PW-CZk" secondAttribute="bottom" id="wHz-iF-SC0"/>
+                                    <constraint firstItem="wfq-Qw-dwf" firstAttribute="top" secondItem="KQp-PW-CZk" secondAttribute="top" id="26n-ft-cwS"/>
+                                    <constraint firstItem="PEJ-VB-r2d" firstAttribute="centerX" secondItem="KQp-PW-CZk" secondAttribute="centerX" id="Jeg-jO-rqM"/>
+                                    <constraint firstAttribute="height" constant="100" id="TbO-Yw-cWe"/>
+                                    <constraint firstItem="wfq-Qw-dwf" firstAttribute="leading" secondItem="KQp-PW-CZk" secondAttribute="leading" id="btP-M0-HkB"/>
+                                    <constraint firstItem="PEJ-VB-r2d" firstAttribute="top" secondItem="KQp-PW-CZk" secondAttribute="top" constant="10" id="dSV-1p-JmQ"/>
+                                    <constraint firstAttribute="trailing" secondItem="wfq-Qw-dwf" secondAttribute="trailing" id="jqv-D9-Lw9"/>
                                 </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="l3U-ux-HuT" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="TWm-Na-Qjz"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="l3U-ux-HuT" secondAttribute="bottom" id="Vi4-n7-gkz"/>
-                            <constraint firstItem="l3U-ux-HuT" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="ZsY-9R-qBW"/>
-                            <constraint firstItem="l3U-ux-HuT" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="dn2-5r-5dF"/>
+                            <constraint firstItem="NXZ-EN-7KB" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="PSS-AZ-3iN"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="NXZ-EN-7KB" secondAttribute="bottom" id="VnU-ye-Mxg"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="KQp-PW-CZk" secondAttribute="bottom" id="Yqn-zj-BR8"/>
+                            <constraint firstItem="NXZ-EN-7KB" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="ePu-gM-KMn"/>
+                            <constraint firstItem="KQp-PW-CZk" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="eqy-rj-rZS"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="NXZ-EN-7KB" secondAttribute="trailing" id="kTL-Oq-9po"/>
+                            <constraint firstItem="KQp-PW-CZk" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="llh-r2-V8p"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
                         <outlet property="distanceLabel" destination="PEJ-VB-r2d" id="WQc-xX-zxl"/>
-                        <outlet property="previewView" destination="l3U-ux-HuT" id="fYY-CI-Ces"/>
                         <outlet property="redLineHeightConstraint" destination="TbO-Yw-cWe" id="jYP-og-Bdl"/>
                         <outlet property="redLineView" destination="KQp-PW-CZk" id="kX1-sN-R0o"/>
-                        <outlet property="redlineBottomConstraint" destination="wHz-iF-SC0" id="cuu-sI-32h"/>
+                        <outlet property="redlineBottomConstraint" destination="Yqn-zj-BR8" id="g6V-yx-jkB"/>
+                        <outlet property="sceneView" destination="NXZ-EN-7KB" id="pbg-eA-Wyi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -79,7 +74,7 @@
     </scenes>
     <resources>
         <namedColor name="Red">
-            <color red="0.58072251080000004" green="0.066734083" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.58039215686274515" green="0.066666666666666666" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

@@ -14,6 +14,8 @@
 		A9573216246C3CB7006D4CFF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9573215246C3CB7006D4CFF /* Assets.xcassets */; };
 		A9573219246C3CB7006D4CFF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9573217246C3CB7006D4CFF /* LaunchScreen.storyboard */; };
 		A9573221246C459C006D4CFF /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9573220246C459C006D4CFF /* PreviewView.swift */; };
+		A9929E8D24757D1A00AC3358 /* ARKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9929E8C24757D1A00AC3358 /* ARKit.framework */; };
+		A9929E8F2475A26D00AC3358 /* TapGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9929E8E2475A26D00AC3358 /* TapGesture.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,8 @@
 		A9573218246C3CB7006D4CFF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A957321A246C3CB7006D4CFF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A9573220246C459C006D4CFF /* PreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
+		A9929E8C24757D1A00AC3358 /* ARKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ARKit.framework; path = System/Library/Frameworks/ARKit.framework; sourceTree = SDKROOT; };
+		A9929E8E2475A26D00AC3358 /* TapGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapGesture.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +37,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9929E8D24757D1A00AC3358 /* ARKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -44,6 +49,7 @@
 			children = (
 				A957320B246C3CB5006D4CFF /* KeepYourDistance */,
 				A957320A246C3CB5006D4CFF /* Products */,
+				A9929E8B24757D1A00AC3358 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -66,8 +72,17 @@
 				A9573217246C3CB7006D4CFF /* LaunchScreen.storyboard */,
 				A957321A246C3CB7006D4CFF /* Info.plist */,
 				A9573220246C459C006D4CFF /* PreviewView.swift */,
+				A9929E8E2475A26D00AC3358 /* TapGesture.swift */,
 			);
 			path = KeepYourDistance;
+			sourceTree = "<group>";
+		};
+		A9929E8B24757D1A00AC3358 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A9929E8C24757D1A00AC3358 /* ARKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -143,6 +158,7 @@
 			files = (
 				A9573211246C3CB5006D4CFF /* ViewController.swift in Sources */,
 				A9573221246C459C006D4CFF /* PreviewView.swift in Sources */,
+				A9929E8F2475A26D00AC3358 /* TapGesture.swift in Sources */,
 				A957320D246C3CB5006D4CFF /* AppDelegate.swift in Sources */,
 				A957320F246C3CB5006D4CFF /* SceneDelegate.swift in Sources */,
 			);
