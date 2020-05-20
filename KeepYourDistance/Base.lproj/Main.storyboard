@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -9,16 +11,75 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="KeepYourDistance" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l3U-ux-HuT" customClass="PreviewView" customModule="KeepYourDistance" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KQp-PW-CZk" userLabel="redLine">
+                                        <rect key="frame" x="0.0" y="762" width="414" height="100"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wfq-Qw-dwf" userLabel="seperator">
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="3"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="3" id="9by-cy-2Hc"/>
+                                                </constraints>
+                                            </view>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PEJ-VB-r2d" userLabel="distanceLabel">
+                                                <rect key="frame" x="174" y="10" width="66.333333333333314" height="33.666666666666664"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" name="Red"/>
+                                        <constraints>
+                                            <constraint firstItem="wfq-Qw-dwf" firstAttribute="top" secondItem="KQp-PW-CZk" secondAttribute="top" id="26n-ft-cwS"/>
+                                            <constraint firstItem="PEJ-VB-r2d" firstAttribute="centerX" secondItem="KQp-PW-CZk" secondAttribute="centerX" id="Jeg-jO-rqM"/>
+                                            <constraint firstAttribute="height" constant="100" id="TbO-Yw-cWe"/>
+                                            <constraint firstItem="wfq-Qw-dwf" firstAttribute="leading" secondItem="KQp-PW-CZk" secondAttribute="leading" id="btP-M0-HkB"/>
+                                            <constraint firstItem="PEJ-VB-r2d" firstAttribute="top" secondItem="KQp-PW-CZk" secondAttribute="top" constant="10" id="dSV-1p-JmQ"/>
+                                            <constraint firstAttribute="trailing" secondItem="wfq-Qw-dwf" secondAttribute="trailing" id="jqv-D9-Lw9"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="KQp-PW-CZk" secondAttribute="trailing" id="7da-Ea-b7z"/>
+                                    <constraint firstItem="KQp-PW-CZk" firstAttribute="leading" secondItem="l3U-ux-HuT" secondAttribute="leading" id="oJw-rB-s7P"/>
+                                    <constraint firstAttribute="bottom" secondItem="KQp-PW-CZk" secondAttribute="bottom" id="wHz-iF-SC0"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="l3U-ux-HuT" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="TWm-Na-Qjz"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="l3U-ux-HuT" secondAttribute="bottom" id="Vi4-n7-gkz"/>
+                            <constraint firstItem="l3U-ux-HuT" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="ZsY-9R-qBW"/>
+                            <constraint firstItem="l3U-ux-HuT" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="dn2-5r-5dF"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="distanceLabel" destination="PEJ-VB-r2d" id="WQc-xX-zxl"/>
+                        <outlet property="previewView" destination="l3U-ux-HuT" id="fYY-CI-Ces"/>
+                        <outlet property="redLineHeightConstraint" destination="TbO-Yw-cWe" id="jYP-og-Bdl"/>
+                        <outlet property="redLineView" destination="KQp-PW-CZk" id="kX1-sN-R0o"/>
+                        <outlet property="redlineBottomConstraint" destination="wHz-iF-SC0" id="cuu-sI-32h"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="137.68115942028987" y="137.94642857142856"/>
         </scene>
     </scenes>
+    <resources>
+        <namedColor name="Red">
+            <color red="0.58072251080000004" green="0.066734083" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
 </document>

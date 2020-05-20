@@ -13,6 +13,7 @@
 		A9573214246C3CB5006D4CFF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9573212246C3CB5006D4CFF /* Main.storyboard */; };
 		A9573216246C3CB7006D4CFF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9573215246C3CB7006D4CFF /* Assets.xcassets */; };
 		A9573219246C3CB7006D4CFF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9573217246C3CB7006D4CFF /* LaunchScreen.storyboard */; };
+		A9573221246C459C006D4CFF /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9573220246C459C006D4CFF /* PreviewView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		A9573215246C3CB7006D4CFF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A9573218246C3CB7006D4CFF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A957321A246C3CB7006D4CFF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A9573220246C459C006D4CFF /* PreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				A9573215246C3CB7006D4CFF /* Assets.xcassets */,
 				A9573217246C3CB7006D4CFF /* LaunchScreen.storyboard */,
 				A957321A246C3CB7006D4CFF /* Info.plist */,
+				A9573220246C459C006D4CFF /* PreviewView.swift */,
 			);
 			path = KeepYourDistance;
 			sourceTree = "<group>";
@@ -139,6 +142,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A9573211246C3CB5006D4CFF /* ViewController.swift in Sources */,
+				A9573221246C459C006D4CFF /* PreviewView.swift in Sources */,
 				A957320D246C3CB5006D4CFF /* AppDelegate.swift in Sources */,
 				A957320F246C3CB5006D4CFF /* SceneDelegate.swift in Sources */,
 			);
