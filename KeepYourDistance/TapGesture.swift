@@ -34,7 +34,7 @@ final class TapGesture {
         view?.removeGestureRecognizer(tapGesture)
     }
     
-    @objc func handleTap(_ sender: UITapGestureRecognizer) {
+    @objc private func handleTap(_ sender: UITapGestureRecognizer) {
         
         guard let view = view else { return }
         

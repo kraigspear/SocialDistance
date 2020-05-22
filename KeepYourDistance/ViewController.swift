@@ -21,9 +21,12 @@ final class ViewController: UIViewController {
     @IBOutlet private weak var redLineView: UIView!
     
     @IBOutlet var sceneView: ARSCNView!
-    private var spheres: [SCNNode] = []
     
     private var tapGesture: TapGesture!
+    
+    private var textNode: SCNText?
+    
+    private var distanceNodes: DistanceNodes!
     
     //MARK: - Session Management
     
@@ -34,42 +37,14 @@ final class ViewController: UIViewController {
         setupARKit()
         tapGesture = TapGesture(on: sceneView)
         
+        distanceNodes = DistanceNodes(sceneView: sceneView)
+        
         tapCancel = tapGesture.tapPublisher.sink { location in
-            self.handleTap(at: location)
+            self.distanceNodes.setTapped(at: location)
         }
     }
     
-    private func handleTap(at location: CGPoint) {
-        
-        
-        
-        // Searches for real world objects such as surfaces and filters out flat surfaces
-        let hitTest = sceneView.hitTest(location, types: [ARHitTestResult.ResultType.featurePoint])
-        // Assigns the most accurate result to a constant if it is non-nil
-        guard let result = hitTest.last else { return }
-        // Converts the matrix_float4x4 to an SCNMatrix4 to be used with SceneKit
-        let transform = SCNMatrix4.init(result.worldTransform)
-        // Creates an SCNVector3 with certain indexes in the matrix
-        let vector = SCNVector3Make(transform.m41, transform.m42, transform.m43)
-        // Makes a new sphere with the created method
-        let sphere = vector.toSphere()
-        
-        if let first = spheres.first {
-            
-            spheres.append(sphere)
-            print("\(sphere.distance(to: first)) inches")
-            
-            if spheres.count > 2 {
-                spheres.forEach { $0.removeFromParentNode() }
-                spheres = [spheres[2]]
-            }
-           
-        } else {
-            spheres.append(sphere)
-        }
-        
-        spheres.forEach { self.sceneView.scene.rootNode.addChildNode($0) }
-    }
+    
     
     override func viewDidAppear(_ animated: Bool) {
          super.viewDidAppear(animated)
@@ -89,7 +64,6 @@ final class ViewController: UIViewController {
     //MARK: - ARKit - Setup
     private func setupARKit() {
         precondition(sceneView.delegate == nil, "Delgate is not nil")
-        sceneView.delegate = self
         sceneView.showsStatistics = true
     }
     
@@ -161,9 +135,9 @@ final class ViewController: UIViewController {
                
                 self.distanceLabel.text = distanceText
                 
-                if delta >= 100.0 {
+                if delta >= 10.0 {
                     
-                    print("Updating constriant: \(constraintConst)")
+                   // print("Updating constriant: \(constraintConst)")
                     UIView.animate(withDuration: 0.30) {
                         self.redLineHeightConstraint.constant = constraintConst
                         self.view.layoutIfNeeded()
@@ -174,7 +148,7 @@ final class ViewController: UIViewController {
                 
                 //self.previewView.setNeedsLayout()
                 //print("x: \(x) y: \(y) z: \(z)")
-                print("constraintConst: \(constraintConst)")
+                //print("constraintConst: \(constraintConst)")
                 
             }
             
@@ -190,34 +164,6 @@ final class ViewController: UIViewController {
         guard timer != nil else { return }
         timer.invalidate()
         timer = nil
-        
-    }
-}
-
-extension ViewController: ARSCNViewDelegate {
-    
-    
-}
-
-extension SCNVector3 {
-    func toSphere() -> SCNNode {
-        
-        // Creates an SCNSphere with a radius of 0.4
-        let sphere = SCNSphere(radius: 0.01)
-        // Converts the sphere into an SCNNode
-        let node = SCNNode(geometry: sphere)
-        // Positions the node based on the passed in position
-        node.position = self
-        // Creates a material that is recognized by SceneKit
-        let material = SCNMaterial()
-        // Converts the contents of the PNG file into the material
-        material.diffuse.contents = UIColor.orange
-        // Creates realistic shadows around the sphere
-        material.lightingModel = .blinn
-        // Wraps the newly made material around the sphere
-        sphere.firstMaterial = material
-        // Returns the node to the function
-        return node
         
     }
 }
