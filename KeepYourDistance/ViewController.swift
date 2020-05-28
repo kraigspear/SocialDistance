@@ -13,7 +13,6 @@ import CoreMotion
 import UIKit
 
 final class ViewController: UIViewController {
-    @IBOutlet private var redlineBottomConstraint: NSLayoutConstraint!
     @IBOutlet private var redLineHeightConstraint: NSLayoutConstraint!
     @IBOutlet private var distanceLabel: UILabel!
     @IBOutlet private var redLineView: UIView!
@@ -33,11 +32,13 @@ final class ViewController: UIViewController {
         super.viewDidLoad()
         setupARKit()
         distanceNode = DistanceNode(sceneView: sceneView)
+        accelerometers = Accelerometers()
+        sinkToAccelerometers()
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        startAccelermoters()
+        accelerometers.start()
         sinkToTapPublisher()
     }
 
@@ -47,7 +48,7 @@ final class ViewController: UIViewController {
     }
 
     override func viewWillDisappear(_ animated: Bool) {
-        stopTimer()
+        accelerometers.stop()
         pauseSession()
         tapGesture?.cancelGesture()
         tapGesture = nil
@@ -72,6 +73,38 @@ final class ViewController: UIViewController {
         }
     }
 
+    // MARK: - Accelerometers
+
+    /// Provides information about the tilt of the device
+    private var accelerometers: Accelerometers!
+    private var cancelAccelerometers: AnyCancellable?
+
+    private var cancellableSet: Set<AnyCancellable> = []
+
+    private func sinkToAccelerometers() {
+        let parentHeight = sceneView.frame.height
+        let redLineHeight = redLineHeightConstraint.constant
+
+        accelerometers.y
+            .map { parentHeight * $0 }
+            .map { abs($0 - redLineHeight) }
+            .receive(on: DispatchQueue.main)
+            .sink { height in
+
+                UIView.animate(withDuration: 0.30) {
+                    self.redLineHeightConstraint.constant = height
+                    self.view.layoutIfNeeded()
+                }
+
+            }.store(in: &cancellableSet)
+
+        accelerometers.y.map { Int($0 * 100) }     // Convert to percentage
+                        .map { $0.distanceText }
+                        .receive(on: DispatchQueue.main)
+                        .assign(to: \.text, on: distanceLabel)
+                        .store(in: &cancellableSet)
+    }
+
     // MARK: - ARKit - Setup
 
     private func setupARKit() {
@@ -90,87 +123,30 @@ final class ViewController: UIViewController {
         sceneView.session.pause()
     }
 
-    private func stopTimer() {
-        timer.invalidate()
-        timer = nil
-    }
-
-    // MARK: - CoreMotion
-
-    private let motion = CMMotionManager()
-    private var timer: Timer!
-
-    private func startAccelermoters() {
-        guard motion.isAccelerometerAvailable else { return }
-
-        let parentHeight = sceneView.frame.height
-
-        let interval = 1.0 / 60.0
-
-        motion.accelerometerUpdateInterval = interval // 60 Hz
-        motion.startAccelerometerUpdates()
-
-        timer = Timer(fire: Date(), interval: interval, repeats: true) { _ in
-
-            if let data = self.motion.accelerometerData {
-                let y = CGFloat(abs(data.acceleration.y))
-
-                let constraintConst = parentHeight * y
-                let delta = abs(constraintConst - self.redLineHeightConstraint.constant)
-
-                // let feet = Int(constraintConst / 100)
-                // let distance = Int(y * 100)
-
-//                var distanceText: String
-//                switch distance {
-//                case ...36:
-//                    distanceText = "Less than 1"
-//                case 36..<44:
-//                    distanceText = "1"
-//                case 44..<52:
-//                    distanceText = "2"
-//                case 52..<57:
-//                    distanceText = "3"
-//                case 57..<60:
-//                    distanceText = "4"
-//                case 60..<64:
-//                    distanceText = "5"
-//                case 64...:
-//                    distanceText = "Over six"
-//                default:
-//                    distanceText = ""
-//                }
-
-                // self.distanceLabel.text = distanceText
-
-                if delta >= 10.0 {
-                    UIView.animate(withDuration: 0.30) {
-                        self.redLineHeightConstraint.constant = constraintConst
-                        self.view.layoutIfNeeded()
-                    }
-
-                    // updateDistanceText(to: self.view.frame.height - constraintConst)
-                }
-            }
-        }
-
-        RunLoop.current.add(timer, forMode: .default)
-
-        func updateDistanceText(to y: CGFloat) {
-            let x = view.frame.size.width / 2
-
-            let point = CGPoint(x: x, y: y)
-            distanceNode.distanceTo(point)
-        }
-    }
-
-    private func stopAccelermoters() {
-        guard timer != nil else { return }
-        timer.invalidate()
-        timer = nil
-    }
-
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .portrait
+    }
+}
+
+private extension Int {
+    var distanceText: String {
+        switch self {
+        case ...36:
+            return "Less than 1"
+        case 36 ..< 44:
+            return "1"
+        case 44 ..< 52:
+            return "2"
+        case 52 ..< 57:
+            return "3"
+        case 57 ..< 60:
+            return "4"
+        case 60 ..< 64:
+            return "5"
+        case 64...:
+            return "Over six"
+        default:
+            return ""
+        }
     }
 }

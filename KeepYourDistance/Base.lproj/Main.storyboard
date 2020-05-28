@@ -63,7 +63,6 @@
                         <outlet property="distanceLabel" destination="PEJ-VB-r2d" id="WQc-xX-zxl"/>
                         <outlet property="redLineHeightConstraint" destination="TbO-Yw-cWe" id="jYP-og-Bdl"/>
                         <outlet property="redLineView" destination="KQp-PW-CZk" id="kX1-sN-R0o"/>
-                        <outlet property="redlineBottomConstraint" destination="Yqn-zj-BR8" id="g6V-yx-jkB"/>
                         <outlet property="sceneView" destination="NXZ-EN-7KB" id="pbg-eA-Wyi"/>
                     </connections>
                 </viewController>
