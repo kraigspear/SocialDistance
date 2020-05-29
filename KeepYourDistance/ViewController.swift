@@ -17,6 +17,10 @@ final class ViewController: UIViewController {
     @IBOutlet private var distanceLabel: UILabel!
     @IBOutlet private var redLineView: UIView!
 
+    /// Distance text to show around the scene node text
+    @IBOutlet private var sceneNodeText: UILabel!
+    @IBOutlet private var instructionsStackView: UIStackView!
+
     /// The ARKit scene view
     @IBOutlet var sceneView: ARSCNView!
 
@@ -30,6 +34,9 @@ final class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        navigationController?.navigationBar.prefersLargeTitles = true
+
         setupARKit()
         distanceNode = DistanceNode(sceneView: sceneView)
         accelerometers = Accelerometers()
@@ -40,6 +47,19 @@ final class ViewController: UIViewController {
         super.viewDidAppear(animated)
         accelerometers.start()
         sinkToTapPublisher()
+
+        hideInstructions()
+    }
+
+    private func hideInstructions() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            UIView.animate(withDuration: 0.25,
+                           animations: {
+                               self.instructionsStackView.layer.opacity = 0.0
+            }) { _ in
+                self.instructionsStackView.isHidden = true
+            }
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -68,8 +88,15 @@ final class ViewController: UIViewController {
                 return
             }
 
-            let distanceText = "\(Float(distanceInchces) / 12.0)"
-            self.distanceLabel.text = distanceText
+            let distanceInFeet = Float(distanceInchces) / 12.0
+
+            self.sceneNodeText.text = String(format: "%.1f", distanceInFeet)
+
+            var sceneNodeTextFrame = self.sceneNodeText.frame
+            sceneNodeTextFrame.origin = location
+
+            self.sceneNodeText.frame = sceneNodeTextFrame
+            self.sceneNodeText.isHidden = false
         }
     }
 
@@ -98,19 +125,21 @@ final class ViewController: UIViewController {
 
             }.store(in: &cancellableSet)
 
-        accelerometers.y.map { Int($0 * 100) }     // Convert to percentage
-                        .map { $0.distanceText }
-                        .receive(on: DispatchQueue.main)
-                        .assign(to: \.text, on: distanceLabel)
-                        .store(in: &cancellableSet)
+        accelerometers.y.map { Int($0 * 100) } // Convert to percentage
+            .map { $0.distanceText }
+            .receive(on: DispatchQueue.main)
+            .assign(to: \.text, on: distanceLabel)
+            .store(in: &cancellableSet)
     }
 
     // MARK: - ARKit - Setup
 
     private func setupARKit() {
         precondition(sceneView.delegate == nil, "Delgate is not nil")
-        sceneView.showsStatistics = true
-        sceneView.debugOptions = [.showConstraints, .showLightExtents, .showFeaturePoints, .showWorldOrigin]
+        sceneView.delegate = self
+        sceneView.showsStatistics = false
+        sceneView.debugOptions = [.showWorldOrigin]
+        //sceneView.debugOptions = [.showConstraints, .showLightExtents, .showFeaturePoints, .showWorldOrigin]
     }
 
     private func runSession() {
@@ -125,6 +154,24 @@ final class ViewController: UIViewController {
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .portrait
+    }
+}
+
+extension ViewController: ARSCNViewDelegate {
+    func renderer(_: SCNSceneRenderer, updateAtTime _: TimeInterval) {
+        guard let tappedNode = distanceNode.tappedSceneKitNode else { return }
+
+        let screenCoordinate = sceneView.projectPoint(tappedNode.position)
+
+        DispatchQueue.main.async {
+            self.sceneNodeText.center = CGPoint(x: CGFloat(screenCoordinate.x), y: CGFloat(screenCoordinate.y))
+
+            self.sceneNodeText.isHidden = (screenCoordinate.z > 1)
+
+            if let rotation = self.sceneView.session.currentFrame?.camera.eulerAngles.z {
+                self.sceneNodeText.transform = CGAffineTransform(rotationAngle: CGFloat(rotation + Float.pi / 2))
+            }
+        }
     }
 }
 

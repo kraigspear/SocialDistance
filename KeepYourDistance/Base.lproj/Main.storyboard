@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="qPI-Rk-TeG">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -8,7 +8,55 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Social Distance-->
+        <scene sceneID="0UT-wp-Ghl">
+            <objects>
+                <viewController id="KVv-lR-Qj9" customClass="WelcomeViewController" customModule="KeepYourDistance" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="lLF-97-ELF">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Welcome" translatesAutoresizingMaskIntoConstraints="NO" id="r4A-kf-r0m">
+                                <rect key="frame" x="0.0" y="154" width="414" height="216"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="216" id="rxw-st-3zK"/>
+                                </constraints>
+                            </imageView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Iqm-nb-FPn">
+                                <rect key="frame" x="0.0" y="370" width="414" height="492"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5tr-TR-aIq">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="492"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
+                                        <state key="normal" title="Check Distance">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="BYZ-38-t0r" kind="show" id="Us0-US-PVe"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="r4A-kf-r0m" firstAttribute="trailing" secondItem="l9h-bv-4QE" secondAttribute="trailing" id="2OU-Ic-Hhz"/>
+                            <constraint firstItem="Iqm-nb-FPn" firstAttribute="leading" secondItem="l9h-bv-4QE" secondAttribute="leading" id="4HM-kv-8sj"/>
+                            <constraint firstItem="r4A-kf-r0m" firstAttribute="leading" secondItem="l9h-bv-4QE" secondAttribute="leading" id="6tr-rC-vT6"/>
+                            <constraint firstItem="l9h-bv-4QE" firstAttribute="bottom" secondItem="Iqm-nb-FPn" secondAttribute="bottom" id="8Wn-cj-WGb"/>
+                            <constraint firstItem="r4A-kf-r0m" firstAttribute="top" secondItem="l9h-bv-4QE" secondAttribute="top" constant="66" id="FE6-21-Fl1"/>
+                            <constraint firstItem="l9h-bv-4QE" firstAttribute="trailing" secondItem="Iqm-nb-FPn" secondAttribute="trailing" id="QDT-FG-7CD"/>
+                            <constraint firstItem="Iqm-nb-FPn" firstAttribute="top" secondItem="r4A-kf-r0m" secondAttribute="bottom" id="uLv-Dh-sIB"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="l9h-bv-4QE"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Social Distance" largeTitleDisplayMode="always" id="WOy-Ad-R1p"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PXo-CF-Vdd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="397.10144927536237" y="28.794642857142854"/>
+        </scene>
+        <!--Check Distance-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="KeepYourDistance" customModuleProvider="target" sceneMemberID="viewController">
@@ -17,7 +65,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <arscnView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NXZ-EN-7KB">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                             </arscnView>
                             <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KQp-PW-CZk" userLabel="redLine">
                                 <rect key="frame" x="0.0" y="762" width="414" height="100"/>
@@ -29,9 +77,9 @@
                                             <constraint firstAttribute="height" constant="3" id="9by-cy-2Hc"/>
                                         </constraints>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PEJ-VB-r2d" userLabel="distanceLabel">
-                                        <rect key="frame" x="174" y="10" width="66.333333333333314" height="33.666666666666664"/>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Starting..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PEJ-VB-r2d" userLabel="distanceLabel">
+                                        <rect key="frame" x="160.33333333333334" y="9.9999999999999982" width="93.333333333333343" height="26.333333333333329"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -46,32 +94,86 @@
                                     <constraint firstAttribute="trailing" secondItem="wfq-Qw-dwf" secondAttribute="trailing" id="jqv-D9-Lw9"/>
                                 </constraints>
                             </view>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jao-QJ-IJ3">
+                                <rect key="frame" x="166" y="361" width="125" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="22" translatesAutoresizingMaskIntoConstraints="NO" id="AzJ-0E-kO4">
+                                <rect key="frame" x="0.0" y="335.66666666666669" width="414" height="225.00000000000006"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Tap" translatesAutoresizingMaskIntoConstraints="NO" id="sPr-hd-nnB">
+                                        <rect key="frame" x="125.66666666666669" y="0.0" width="163" height="154"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="163" id="bEO-uw-nWD"/>
+                                            <constraint firstAttribute="height" constant="154" id="bff-94-cJy"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap the screen to use Augmented Reality to measure distance" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="edn-TL-pHo">
+                                        <rect key="frame" x="18" y="176" width="378.33333333333331" height="49"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="NXZ-EN-7KB" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="PSS-AZ-3iN"/>
+                            <constraint firstItem="AzJ-0E-kO4" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="TLG-Pj-IE7"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="NXZ-EN-7KB" secondAttribute="bottom" id="VnU-ye-Mxg"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="KQp-PW-CZk" secondAttribute="bottom" id="Yqn-zj-BR8"/>
                             <constraint firstItem="NXZ-EN-7KB" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="ePu-gM-KMn"/>
                             <constraint firstItem="KQp-PW-CZk" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="eqy-rj-rZS"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="NXZ-EN-7KB" secondAttribute="trailing" id="kTL-Oq-9po"/>
                             <constraint firstItem="KQp-PW-CZk" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="llh-r2-V8p"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="AzJ-0E-kO4" secondAttribute="trailing" id="sba-fy-9HE"/>
+                            <constraint firstItem="AzJ-0E-kO4" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="vdH-wh-70C"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Check Distance" largeTitleDisplayMode="never" id="7Mv-KI-Q7j"/>
                     <connections>
                         <outlet property="distanceLabel" destination="PEJ-VB-r2d" id="WQc-xX-zxl"/>
+                        <outlet property="instructionsStackView" destination="AzJ-0E-kO4" id="8sv-db-7JP"/>
                         <outlet property="redLineHeightConstraint" destination="TbO-Yw-cWe" id="jYP-og-Bdl"/>
                         <outlet property="redLineView" destination="KQp-PW-CZk" id="kX1-sN-R0o"/>
+                        <outlet property="sceneNodeText" destination="jao-QJ-IJ3" id="5bb-md-hzH"/>
                         <outlet property="sceneView" destination="NXZ-EN-7KB" id="pbg-eA-Wyi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="137.68115942028987" y="137.94642857142856"/>
+            <point key="canvasLocation" x="1408.6956521739132" y="47.544642857142854"/>
+        </scene>
+        <!--Social Distance-->
+        <scene sceneID="pim-v2-QjA">
+            <objects>
+                <navigationController title="Social Distance" automaticallyAdjustsScrollViewInsets="NO" id="qPI-Rk-TeG" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="I9E-zH-kD8">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="KVv-lR-Qj9" kind="relationship" relationship="rootViewController" id="fRC-Og-Jxy"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2nt-vV-9Xs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-513.04347826086962" y="28.794642857142854"/>
         </scene>
     </scenes>
+    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
     <resources>
+        <image name="Tap" width="31" height="38"/>
+        <image name="Welcome" width="4820" height="2512"/>
         <namedColor name="Red">
             <color red="0.58039215686274515" green="0.066666666666666666" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

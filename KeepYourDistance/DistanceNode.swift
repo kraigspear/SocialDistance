@@ -19,7 +19,7 @@ struct DistanceNode {
     private let sceneView: ARSCNView
 
     /// A SceneKit node added from being tapped
-    private var tappedSceneKitNode: SCNNode?
+    var tappedSceneKitNode: SCNNode?
 
     /**
      Initialize a new `DistanceNodes` with the `ARSCNView` that shows the AR content
@@ -72,6 +72,9 @@ struct DistanceNode {
                histTest.count)
 
         if let resultForGeometryPlane = histTest.first(where: { $0.type == .existingPlaneUsingGeometry }) {
+            os_log("Returning existingPlaneUsingGeometry",
+                   log: log,
+                   type: .debug)
             return resultForGeometryPlane
         }
 
