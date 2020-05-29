@@ -6,208 +6,194 @@
 //  Copyright © 2020 spearware. All rights reserved.
 //
 
-import UIKit
+import ARKit
 import AVFoundation
+import Combine
 import CoreMotion
+import UIKit
 
 final class ViewController: UIViewController {
+    @IBOutlet private var redLineHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private var distanceLabel: UILabel!
+    @IBOutlet private var redLineView: UIView!
 
-    @IBOutlet private weak var previewView: PreviewView!
-    @IBOutlet private weak var redlineBottomConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var redLineHeightConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var distanceLabel: UILabel!
-    @IBOutlet private weak var redLineView: UIView!
-    
-    //MARK: - Session Management
-    private enum SessionSetupResult {
-       case success
-       case notAuthorized
-       case configurationFailed
-    }
-    
-    private let session = AVCaptureSession()
-    
-    private var setupResult: SessionSetupResult = .success
-    
-    private let sessionQueue = DispatchQueue(label: "session queue")
-    
-    @objc dynamic var videoDeviceInput: AVCaptureDeviceInput!
-    
-    private var captureSession: AVCaptureSession?
-    
+    /// Distance text to show around the scene node text
+    @IBOutlet private var sceneNodeText: UILabel!
+    @IBOutlet private var instructionsStackView: UIStackView!
+
+    /// The ARKit scene view
+    @IBOutlet var sceneView: ARSCNView!
+
+    /// Gesture to receive taps to indicate where to place a node for measurment
+    private var tapGesture: TapGesture?
+
+    /// Model managing two ARKit scene nodes to measure distance
+    private var distanceNode: DistanceNode!
+
+    // MARK: - Lifecycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        requestAccess()
-       
-        //transform
-        
-      
-        
-        //
-       
-        
-        previewView.session = session
-        
-        sessionQueue.async {
-            self.configureSession()
+
+        navigationController?.navigationBar.prefersLargeTitles = true
+
+        setupARKit()
+        distanceNode = DistanceNode(sceneView: sceneView)
+        accelerometers = Accelerometers()
+        sinkToAccelerometers()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        accelerometers.start()
+        sinkToTapPublisher()
+
+        hideInstructions()
+    }
+
+    private func hideInstructions() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            UIView.animate(withDuration: 0.25,
+                           animations: {
+                               self.instructionsStackView.layer.opacity = 0.0
+            }) { _ in
+                self.instructionsStackView.isHidden = true
+            }
         }
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        sessionQueue.async {
-            switch self.setupResult {
-            case .success:
-                self.session.startRunning()
-            default:
-                break
+        runSession()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        accelerometers.stop()
+        pauseSession()
+        tapGesture?.cancelGesture()
+        tapGesture = nil
+        super.viewWillDisappear(animated)
+    }
+
+    // MARK: - Tap Gesture
+
+    private var tapCancel: AnyCancellable?
+    /// Listen for taps
+    private func sinkToTapPublisher() {
+        tapGesture = TapGesture(on: sceneView)
+        tapCancel = tapGesture!.tapPublisher.sink { location in
+
+            guard let distanceInchces = self.distanceNode.distanceTo(location) else {
+                self.distanceLabel.text = "Try again"
+                return
             }
+
+            let distanceInFeet = Float(distanceInchces) / 12.0
+
+            self.sceneNodeText.text = String(format: "%.1f", distanceInFeet)
+
+            var sceneNodeTextFrame = self.sceneNodeText.frame
+            sceneNodeTextFrame.origin = location
+
+            self.sceneNodeText.frame = sceneNodeTextFrame
+            self.sceneNodeText.isHidden = false
         }
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        startAccelermoters()
+
+    // MARK: - Accelerometers
+
+    /// Provides information about the tilt of the device
+    private var accelerometers: Accelerometers!
+    private var cancelAccelerometers: AnyCancellable?
+
+    private var cancellableSet: Set<AnyCancellable> = []
+
+    private func sinkToAccelerometers() {
+        let parentHeight = sceneView.frame.height
+        let redLineHeight = redLineHeightConstraint.constant
+
+        accelerometers.y
+            .map { parentHeight * $0 }
+            .map { abs($0 - redLineHeight) }
+            .receive(on: DispatchQueue.main)
+            .sink { height in
+
+                UIView.animate(withDuration: 0.30) {
+                    self.redLineHeightConstraint.constant = height
+                    self.view.layoutIfNeeded()
+                }
+
+            }.store(in: &cancellableSet)
+
+        accelerometers.y.map { Int($0 * 100) } // Convert to percentage
+            .map { $0.distanceText }
+            .receive(on: DispatchQueue.main)
+            .assign(to: \.text, on: distanceLabel)
+            .store(in: &cancellableSet)
     }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        timer.invalidate()
-        timer = nil
-        super.viewDidDisappear(animated)
+
+    // MARK: - ARKit - Setup
+
+    private func setupARKit() {
+        precondition(sceneView.delegate == nil, "Delgate is not nil")
+        sceneView.delegate = self
+        sceneView.showsStatistics = false
+        sceneView.debugOptions = [.showWorldOrigin]
+        //sceneView.debugOptions = [.showConstraints, .showLightExtents, .showFeaturePoints, .showWorldOrigin]
     }
-   
+
+    private func runSession() {
+        let configuration = ARWorldTrackingConfiguration()
+        configuration.planeDetection = .horizontal
+        sceneView.session.run(configuration)
+    }
+
+    private func pauseSession() {
+        sceneView.session.pause()
+    }
+
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .portrait
     }
+}
 
-    private func requestAccess() {
-        switch AVCaptureDevice.authorizationStatus(for: .video) {
-            case .authorized:
-                // The user has previously granted access to the camera.
-                break
-            case .notDetermined:
-                sessionQueue.suspend()
-                AVCaptureDevice.requestAccess(for: .video, completionHandler: { granted in
-                               if !granted {
-                                   self.setupResult = .notAuthorized
-                               }
-                               self.sessionQueue.resume()
-                           })
-        default:
-            setupResult = .notAuthorized
-        }
-    }
-    
-    private func configureSession() {
-        guard setupResult == .success else { return }
-        session.beginConfiguration()
-        session.sessionPreset = .photo
-        
-        do {
-            
-            if let videoDevice = AVCaptureDevice.default(.builtInWideAngleCamera,
-                                                          for: .video,
-                                                          position: .back) {
-                
-                let videoDeviceInput = try AVCaptureDeviceInput(device: videoDevice)
-                
-                if session.canAddInput(videoDeviceInput) {
-                    session.addInput(videoDeviceInput)
-                    DispatchQueue.main.async {
-                        self.previewView.videoPreviewLayer.connection?.videoOrientation = AVCaptureVideoOrientation.portrait
-                        self.previewView.videoPreviewLayer.videoGravity = .resizeAspectFill
-                    }
-                }
-                
-                
-            } else {
-                setupResult = .configurationFailed
-                return
+extension ViewController: ARSCNViewDelegate {
+    func renderer(_: SCNSceneRenderer, updateAtTime _: TimeInterval) {
+        guard let tappedNode = distanceNode.tappedSceneKitNode else { return }
+
+        let screenCoordinate = sceneView.projectPoint(tappedNode.position)
+
+        DispatchQueue.main.async {
+            self.sceneNodeText.center = CGPoint(x: CGFloat(screenCoordinate.x), y: CGFloat(screenCoordinate.y))
+
+            self.sceneNodeText.isHidden = (screenCoordinate.z > 1)
+
+            if let rotation = self.sceneView.session.currentFrame?.camera.eulerAngles.z {
+                self.sceneNodeText.transform = CGAffineTransform(rotationAngle: CGFloat(rotation + Float.pi / 2))
             }
-        } catch {
-            setupResult = .configurationFailed
-            session.commitConfiguration()
-            return
         }
-        
-        session.commitConfiguration()
-    }
-    
-    //MARK: - CoreMotion
-    private let motion = CMMotionManager()
-    private var timer: Timer!
-    
-    private func startAccelermoters() {
-        guard motion.isAccelerometerAvailable else { return }
-        
-        let parentHeight = self.previewView.frame.height
-        
-        let interval = 1.0 / 60.0
-        
-        motion.accelerometerUpdateInterval = interval  // 60 Hz
-        motion.startAccelerometerUpdates()
-        
-        timer = Timer(fire: Date(), interval: interval, repeats: true) { timer in
-            
-            if let data = self.motion.accelerometerData {
-                
-                let y = CGFloat(abs(data.acceleration.y))
-                
-                let constraintConst = parentHeight * y
-                //let delta = abs(constraintConst - self.redlineBottomConstraint.constant)
-                
-               // let feet = Int(constraintConst / 100)
-                let distance = Int(y * 100)
-                
-                var distanceText: String
-                switch distance {
-                case ...36:
-                    distanceText = "Less than 1"
-                case 36..<44:
-                    distanceText = "1"
-                case 44..<52:
-                    distanceText = "2"
-                case 52..<57:
-                    distanceText = "3"
-                case 57..<60:
-                    distanceText = "4"
-                case 60..<64:
-                    distanceText = "5"
-                case 64...:
-                    distanceText = "Over six"
-                default:
-                    distanceText = ""
-                }
-               
-                self.distanceLabel.text = distanceText
-                
-                //if delta >= 10.0 {
-                    //self.redlineBottomConstraint.constant = constraintConst
-                self.redLineHeightConstraint.constant = constraintConst
-                
-                UIView.animate(withDuration: 0.10) {
-                    self.previewView.layoutIfNeeded()
-                }
-                
-                //self.previewView.setNeedsLayout()
-                //print("x: \(x) y: \(y) z: \(z)")
-                print("constraintConst: \(constraintConst)")
-                
-            }
-            
-        }
-        
-        RunLoop.current.add(timer, forMode: .default)
-        
-        
-    }
-    
-    private func stopAccelermoters() {
-        
-        guard timer != nil else { return }
-        timer.invalidate()
-        timer = nil
-        
     }
 }
 
+private extension Int {
+    var distanceText: String {
+        switch self {
+        case ...36:
+            return "Less than 1"
+        case 36 ..< 44:
+            return "1"
+        case 44 ..< 52:
+            return "2"
+        case 52 ..< 57:
+            return "3"
+        case 57 ..< 60:
+            return "4"
+        case 60 ..< 64:
+            return "5"
+        case 64...:
+            return "Over six"
+        default:
+            return ""
+        }
+    }
+}
