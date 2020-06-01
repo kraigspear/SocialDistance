@@ -47,19 +47,7 @@ final class ViewController: UIViewController {
         super.viewDidAppear(animated)
         accelerometers.start()
         sinkToTapPublisher()
-
-        hideInstructions()
-    }
-
-    private func hideInstructions() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            UIView.animate(withDuration: 0.25,
-                           animations: {
-                               self.instructionsStackView.layer.opacity = 0.0
-            }) { _ in
-                self.instructionsStackView.isHidden = true
-            }
-        }
+        sinkToInstructionsTapGesture()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -72,6 +60,7 @@ final class ViewController: UIViewController {
         pauseSession()
         tapGesture?.cancelGesture()
         tapGesture = nil
+        cancelInstructionsTap()
         super.viewWillDisappear(animated)
     }
 
@@ -83,6 +72,11 @@ final class ViewController: UIViewController {
         tapGesture = TapGesture(on: sceneView)
         tapCancel = tapGesture!.tapPublisher.sink { location in
 
+            if !self.instructionsStackView.isHidden {
+                self.hideInstructions()
+                return
+            }
+            
             guard let distanceInchces = self.distanceNode.distanceTo(location) else {
                 self.distanceLabel.text = "Try again"
                 return
@@ -98,6 +92,31 @@ final class ViewController: UIViewController {
             self.sceneNodeText.frame = sceneNodeTextFrame
             self.sceneNodeText.isHidden = false
         }
+    }
+    
+    private var instructionsTapCancel: AnyCancellable?
+    private var instructrionsTap: TapGesture?
+    
+    private func sinkToInstructionsTapGesture() {
+        
+        instructrionsTap = TapGesture(on: instructionsStackView)
+        instructionsTapCancel = instructrionsTap!.tapPublisher.sink { _ in
+            self.hideInstructions()
+        }
+        
+    }
+    
+    private func hideInstructions() {
+        UIView.animate(withDuration: 0.10, animations: { self.instructionsStackView.layer.opacity = 0.0 } ) { _ in
+            self.instructionsStackView.isHidden = true
+            self.cancelInstructionsTap()
+        }
+    }
+    
+    private func cancelInstructionsTap() {
+        self.instructionsTapCancel = nil
+        self.instructrionsTap?.cancelGesture()
+        self.instructrionsTap = nil
     }
 
     // MARK: - Accelerometers

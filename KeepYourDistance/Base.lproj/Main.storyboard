@@ -65,10 +65,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <arscnView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NXZ-EN-7KB">
-                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="808"/>
                             </arscnView>
                             <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KQp-PW-CZk" userLabel="redLine">
-                                <rect key="frame" x="0.0" y="762" width="414" height="100"/>
+                                <rect key="frame" x="0.0" y="796" width="414" height="100"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wfq-Qw-dwf" userLabel="seperator">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="3"/>
@@ -120,13 +120,13 @@
                                 </subviews>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="NXZ-EN-7KB" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="PSS-AZ-3iN"/>
                             <constraint firstItem="AzJ-0E-kO4" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="TLG-Pj-IE7"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="NXZ-EN-7KB" secondAttribute="bottom" id="VnU-ye-Mxg"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="KQp-PW-CZk" secondAttribute="bottom" id="Yqn-zj-BR8"/>
+                            <constraint firstAttribute="bottom" secondItem="NXZ-EN-7KB" secondAttribute="bottom" id="VnU-ye-Mxg"/>
+                            <constraint firstAttribute="bottom" secondItem="KQp-PW-CZk" secondAttribute="bottom" id="Yqn-zj-BR8"/>
                             <constraint firstItem="NXZ-EN-7KB" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="ePu-gM-KMn"/>
                             <constraint firstItem="KQp-PW-CZk" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="eqy-rj-rZS"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="NXZ-EN-7KB" secondAttribute="trailing" id="kTL-Oq-9po"/>
