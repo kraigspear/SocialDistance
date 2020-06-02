@@ -29,6 +29,8 @@ final class ViewController: UIViewController {
 
     /// Model managing two ARKit scene nodes to measure distance
     private var distanceNode: DistanceNode!
+    
+    private let distanceScanner = DistanceScanner()
 
     // MARK: - Lifecycle
 
@@ -48,7 +50,7 @@ final class ViewController: UIViewController {
         accelerometers.start()
         sinkToTapPublisher()
         sinkToInstructionsTapGesture()
-    }
+   }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -81,8 +83,10 @@ final class ViewController: UIViewController {
                 self.distanceLabel.text = "Try again"
                 return
             }
-
-            let distanceInFeet = Float(distanceInchces) / 12.0
+            
+            self.distanceScanner.scan(onSurfaceSize: self.view.frame.size, distanceNode: self.distanceNode)
+            
+            let distanceInFeet = CGFloat(distanceInchces) / 12.0
 
             self.sceneNodeText.text = String(format: "%.1f", distanceInFeet)
 
@@ -93,6 +97,7 @@ final class ViewController: UIViewController {
             self.sceneNodeText.isHidden = false
         }
     }
+    
     
     private var instructionsTapCancel: AnyCancellable?
     private var instructrionsTap: TapGesture?
@@ -126,30 +131,42 @@ final class ViewController: UIViewController {
     private var cancelAccelerometers: AnyCancellable?
 
     private var cancellableSet: Set<AnyCancellable> = []
-
-    private func sinkToAccelerometers() {
+    
+    private var yChangedPublisher: AnyPublisher<CGFloat, Never> {
+        
         let parentHeight = sceneView.frame.height
         let redLineHeight = redLineHeightConstraint.constant
-
-        accelerometers.y
-            .map { parentHeight * $0 }
+        
+        return accelerometers.y.map { parentHeight * $0 }
             .map { abs($0 - redLineHeight) }
+            .eraseToAnyPublisher()
+    }
+
+    private func sinkToAccelerometers() {
+
+        yChangedPublisher.removeDuplicates()
+                         .receive(on: DispatchQueue.main).sink { height in
+                            
+            UIView.animate(withDuration: 0.30) {
+                self.redLineHeightConstraint.constant = height
+                self.view.layoutIfNeeded()
+            }
+                            
+        }.store(in: &cancellableSet)
+        
+        accelerometers.y.map { self.calcYPosition($0)  }
+            .map { self.distanceScanner.distanceText(forHeight: $0) }
             .receive(on: DispatchQueue.main)
-            .sink { height in
-
-                UIView.animate(withDuration: 0.30) {
-                    self.redLineHeightConstraint.constant = height
-                    self.view.layoutIfNeeded()
-                }
-
-            }.store(in: &cancellableSet)
-
-        accelerometers.y.map { Int($0 * 100) } // Convert to percentage
-            .map { $0.distanceText }
-            .receive(on: DispatchQueue.main)
-            .assign(to: \.text, on: distanceLabel)
+            .assign(to: \.text, on: self.distanceLabel)
             .store(in: &cancellableSet)
     }
+    
+    func calcYPosition(_ percentage: CGFloat) -> Int {
+        let parentY = abs((percentage * sceneView.frame.height) - sceneView.frame.height)
+        print("percentage: \(percentage) parentY: \(parentY)")
+        return Int(parentY)
+    }
+    
 
     // MARK: - ARKit - Setup
 
