@@ -9,16 +9,12 @@
 import ARKit
 import AVFoundation
 import Combine
-import CoreMotion
 import UIKit
 
 final class ViewController: UIViewController {
-    @IBOutlet private var redLineHeightConstraint: NSLayoutConstraint!
-    @IBOutlet private var distanceLabel: UILabel!
-    @IBOutlet private var redLineView: UIView!
-
     /// Distance text to show around the scene node text
-    @IBOutlet private var sceneNodeText: UILabel!
+    @IBOutlet private var distanceLabel: UILabel!
+    /// Instructions on how to use
     @IBOutlet private var instructionsStackView: UIStackView!
 
     /// The ARKit scene view
@@ -28,9 +24,55 @@ final class ViewController: UIViewController {
     private var tapGesture: TapGesture?
 
     /// Model managing two ARKit scene nodes to measure distance
-    private var distanceNode: DistanceNode!
-    
-    private let distanceScanner = DistanceScanner()
+    private var distanceCalculator: DistanceCalculator!
+
+    private final class DistanceLabelPopulate {
+        private weak var label: UILabel?
+        private let sceneView: ARSCNView
+        private let distanceCalculator: DistanceCalculator
+
+        init(label: UILabel,
+             distanceCalculator: DistanceCalculator,
+             sceneView: ARSCNView) {
+            self.label = label
+            self.distanceCalculator = distanceCalculator
+            self.sceneView = sceneView
+        }
+
+        func updatePosition() {
+            guard let tappedNode = distanceCalculator.tappedSceneKitNode else { return }
+
+            let screenCoordinate = sceneView.projectPoint(tappedNode.position)
+
+            DispatchQueue.main.async {
+                guard let label = self.label else { return }
+
+                label.center = CGPoint(x: CGFloat(screenCoordinate.x), y: CGFloat(screenCoordinate.y))
+
+                label.isHidden = (screenCoordinate.z > 1)
+
+                if let rotation = self.sceneView.session.currentFrame?.camera.eulerAngles.z {
+                    label.transform = CGAffineTransform(rotationAngle: CGFloat(rotation + Float.pi / 2))
+                }
+            }
+        }
+
+        func updateText(at location: CGPoint) {
+            guard let label = label else { return }
+
+            if let distanceInchces = distanceCalculator.distanceTo(location) {
+                let distanceInFeet = CGFloat(distanceInchces) / 12.0
+                label.text = String(format: "%.1f", distanceInFeet)
+            }
+
+            var sceneNodeTextFrame = label.frame
+            sceneNodeTextFrame.origin = location
+            label.frame = sceneNodeTextFrame
+            label.isHidden = false
+        }
+    }
+
+    private var distanceLabelPopulate: DistanceLabelPopulate!
 
     // MARK: - Lifecycle
 
@@ -40,17 +82,17 @@ final class ViewController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
 
         setupARKit()
-        distanceNode = DistanceNode(sceneView: sceneView)
-        accelerometers = Accelerometers()
-        sinkToAccelerometers()
+        distanceCalculator = DistanceCalculator(sceneView: sceneView)
+        distanceLabelPopulate = DistanceLabelPopulate(label: distanceLabel,
+                                                      distanceCalculator: distanceCalculator,
+                                                      sceneView: sceneView)
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        accelerometers.start()
         sinkToTapPublisher()
         sinkToInstructionsTapGesture()
-   }
+    }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -58,7 +100,6 @@ final class ViewController: UIViewController {
     }
 
     override func viewWillDisappear(_ animated: Bool) {
-        accelerometers.stop()
         pauseSession()
         tapGesture?.cancelGesture()
         tapGesture = nil
@@ -78,95 +119,35 @@ final class ViewController: UIViewController {
                 self.hideInstructions()
                 return
             }
-            
-            guard let distanceInchces = self.distanceNode.distanceTo(location) else {
-                self.distanceLabel.text = "Try again"
-                return
-            }
-            
-            self.distanceScanner.scan(onSurfaceSize: self.view.frame.size, distanceNode: self.distanceNode)
-            
-            let distanceInFeet = CGFloat(distanceInchces) / 12.0
 
-            self.sceneNodeText.text = String(format: "%.1f", distanceInFeet)
-
-            var sceneNodeTextFrame = self.sceneNodeText.frame
-            sceneNodeTextFrame.origin = location
-
-            self.sceneNodeText.frame = sceneNodeTextFrame
-            self.sceneNodeText.isHidden = false
+            self.distanceLabelPopulate.updateText(at: location)
         }
     }
-    
-    
+
+    // MARK: - Instructions
+
     private var instructionsTapCancel: AnyCancellable?
     private var instructrionsTap: TapGesture?
-    
+
     private func sinkToInstructionsTapGesture() {
-        
         instructrionsTap = TapGesture(on: instructionsStackView)
         instructionsTapCancel = instructrionsTap!.tapPublisher.sink { _ in
             self.hideInstructions()
         }
-        
     }
-    
+
     private func hideInstructions() {
-        UIView.animate(withDuration: 0.10, animations: { self.instructionsStackView.layer.opacity = 0.0 } ) { _ in
+        UIView.animate(withDuration: 0.10, animations: { self.instructionsStackView.layer.opacity = 0.0 }) { _ in
             self.instructionsStackView.isHidden = true
             self.cancelInstructionsTap()
         }
     }
-    
+
     private func cancelInstructionsTap() {
-        self.instructionsTapCancel = nil
-        self.instructrionsTap?.cancelGesture()
-        self.instructrionsTap = nil
+        instructionsTapCancel = nil
+        instructrionsTap?.cancelGesture()
+        instructrionsTap = nil
     }
-
-    // MARK: - Accelerometers
-
-    /// Provides information about the tilt of the device
-    private var accelerometers: Accelerometers!
-    private var cancelAccelerometers: AnyCancellable?
-
-    private var cancellableSet: Set<AnyCancellable> = []
-    
-    private var yChangedPublisher: AnyPublisher<CGFloat, Never> {
-        
-        let parentHeight = sceneView.frame.height
-        let redLineHeight = redLineHeightConstraint.constant
-        
-        return accelerometers.y.map { parentHeight * $0 }
-            .map { abs($0 - redLineHeight) }
-            .eraseToAnyPublisher()
-    }
-
-    private func sinkToAccelerometers() {
-
-        yChangedPublisher.removeDuplicates()
-                         .receive(on: DispatchQueue.main).sink { height in
-                            
-            UIView.animate(withDuration: 0.30) {
-                self.redLineHeightConstraint.constant = height
-                self.view.layoutIfNeeded()
-            }
-                            
-        }.store(in: &cancellableSet)
-        
-        accelerometers.y.map { self.calcYPosition($0)  }
-            .map { self.distanceScanner.distanceText(forHeight: $0) }
-            .receive(on: DispatchQueue.main)
-            .assign(to: \.text, on: self.distanceLabel)
-            .store(in: &cancellableSet)
-    }
-    
-    func calcYPosition(_ percentage: CGFloat) -> Int {
-        let parentY = abs((percentage * sceneView.frame.height) - sceneView.frame.height)
-        print("percentage: \(percentage) parentY: \(parentY)")
-        return Int(parentY)
-    }
-    
 
     // MARK: - ARKit - Setup
 
@@ -175,7 +156,7 @@ final class ViewController: UIViewController {
         sceneView.delegate = self
         sceneView.showsStatistics = false
         sceneView.debugOptions = [.showWorldOrigin]
-        //sceneView.debugOptions = [.showConstraints, .showLightExtents, .showFeaturePoints, .showWorldOrigin]
+        // sceneView.debugOptions = [.showConstraints, .showLightExtents, .showFeaturePoints, .showWorldOrigin]
     }
 
     private func runSession() {
@@ -188,48 +169,17 @@ final class ViewController: UIViewController {
         sceneView.session.pause()
     }
 
+    // MARK: - Orientation
+
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .portrait
     }
 }
 
+// MARK: - ARSCNViewDelegate
+
 extension ViewController: ARSCNViewDelegate {
     func renderer(_: SCNSceneRenderer, updateAtTime _: TimeInterval) {
-        guard let tappedNode = distanceNode.tappedSceneKitNode else { return }
-
-        let screenCoordinate = sceneView.projectPoint(tappedNode.position)
-
-        DispatchQueue.main.async {
-            self.sceneNodeText.center = CGPoint(x: CGFloat(screenCoordinate.x), y: CGFloat(screenCoordinate.y))
-
-            self.sceneNodeText.isHidden = (screenCoordinate.z > 1)
-
-            if let rotation = self.sceneView.session.currentFrame?.camera.eulerAngles.z {
-                self.sceneNodeText.transform = CGAffineTransform(rotationAngle: CGFloat(rotation + Float.pi / 2))
-            }
-        }
-    }
-}
-
-private extension Int {
-    var distanceText: String {
-        switch self {
-        case ...36:
-            return "Less than 1"
-        case 36 ..< 44:
-            return "1"
-        case 44 ..< 52:
-            return "2"
-        case 52 ..< 57:
-            return "3"
-        case 57 ..< 60:
-            return "4"
-        case 60 ..< 64:
-            return "5"
-        case 64...:
-            return "Over six"
-        default:
-            return ""
-        }
+        distanceLabelPopulate.updatePosition()
     }
 }

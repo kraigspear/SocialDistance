@@ -3,7 +3,6 @@
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
-        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -67,33 +66,6 @@
                             <arscnView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NXZ-EN-7KB">
                                 <rect key="frame" x="0.0" y="88" width="414" height="808"/>
                             </arscnView>
-                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KQp-PW-CZk" userLabel="redLine">
-                                <rect key="frame" x="0.0" y="796" width="414" height="100"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wfq-Qw-dwf" userLabel="seperator">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="3"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="3" id="9by-cy-2Hc"/>
-                                        </constraints>
-                                    </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Starting..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PEJ-VB-r2d" userLabel="distanceLabel">
-                                        <rect key="frame" x="160.33333333333334" y="9.9999999999999982" width="93.333333333333343" height="26.333333333333329"/>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" name="Red"/>
-                                <constraints>
-                                    <constraint firstItem="wfq-Qw-dwf" firstAttribute="top" secondItem="KQp-PW-CZk" secondAttribute="top" id="26n-ft-cwS"/>
-                                    <constraint firstItem="PEJ-VB-r2d" firstAttribute="centerX" secondItem="KQp-PW-CZk" secondAttribute="centerX" id="Jeg-jO-rqM"/>
-                                    <constraint firstAttribute="height" constant="100" id="TbO-Yw-cWe"/>
-                                    <constraint firstItem="wfq-Qw-dwf" firstAttribute="leading" secondItem="KQp-PW-CZk" secondAttribute="leading" id="btP-M0-HkB"/>
-                                    <constraint firstItem="PEJ-VB-r2d" firstAttribute="top" secondItem="KQp-PW-CZk" secondAttribute="top" constant="10" id="dSV-1p-JmQ"/>
-                                    <constraint firstAttribute="trailing" secondItem="wfq-Qw-dwf" secondAttribute="trailing" id="jqv-D9-Lw9"/>
-                                </constraints>
-                            </view>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jao-QJ-IJ3">
                                 <rect key="frame" x="166" y="361" width="125" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -126,11 +98,8 @@
                             <constraint firstItem="NXZ-EN-7KB" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="PSS-AZ-3iN"/>
                             <constraint firstItem="AzJ-0E-kO4" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="TLG-Pj-IE7"/>
                             <constraint firstAttribute="bottom" secondItem="NXZ-EN-7KB" secondAttribute="bottom" id="VnU-ye-Mxg"/>
-                            <constraint firstAttribute="bottom" secondItem="KQp-PW-CZk" secondAttribute="bottom" id="Yqn-zj-BR8"/>
                             <constraint firstItem="NXZ-EN-7KB" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="ePu-gM-KMn"/>
-                            <constraint firstItem="KQp-PW-CZk" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="eqy-rj-rZS"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="NXZ-EN-7KB" secondAttribute="trailing" id="kTL-Oq-9po"/>
-                            <constraint firstItem="KQp-PW-CZk" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="llh-r2-V8p"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="AzJ-0E-kO4" secondAttribute="trailing" id="sba-fy-9HE"/>
                             <constraint firstItem="AzJ-0E-kO4" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="vdH-wh-70C"/>
                         </constraints>
@@ -138,11 +107,8 @@
                     </view>
                     <navigationItem key="navigationItem" title="Check Distance" largeTitleDisplayMode="never" id="7Mv-KI-Q7j"/>
                     <connections>
-                        <outlet property="distanceLabel" destination="PEJ-VB-r2d" id="WQc-xX-zxl"/>
+                        <outlet property="distanceLabel" destination="jao-QJ-IJ3" id="5bb-md-hzH"/>
                         <outlet property="instructionsStackView" destination="AzJ-0E-kO4" id="8sv-db-7JP"/>
-                        <outlet property="redLineHeightConstraint" destination="TbO-Yw-cWe" id="jYP-og-Bdl"/>
-                        <outlet property="redLineView" destination="KQp-PW-CZk" id="kX1-sN-R0o"/>
-                        <outlet property="sceneNodeText" destination="jao-QJ-IJ3" id="5bb-md-hzH"/>
                         <outlet property="sceneView" destination="NXZ-EN-7KB" id="pbg-eA-Wyi"/>
                     </connections>
                 </viewController>
@@ -174,8 +140,5 @@
     <resources>
         <image name="Tap" width="31" height="38"/>
         <image name="Welcome" width="4820" height="2512"/>
-        <namedColor name="Red">
-            <color red="0.58039215686274515" green="0.066666666666666666" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
     </resources>
 </document>

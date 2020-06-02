@@ -16,12 +16,9 @@
 		A9573221246C459C006D4CFF /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9573220246C459C006D4CFF /* PreviewView.swift */; };
 		A9929E8D24757D1A00AC3358 /* ARKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9929E8C24757D1A00AC3358 /* ARKit.framework */; };
 		A9929E8F2475A26D00AC3358 /* TapGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9929E8E2475A26D00AC3358 /* TapGesture.swift */; };
-		A9A7552F2476AB6200F44FAC /* DistanceNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A7552E2476AB6200F44FAC /* DistanceNode.swift */; };
+		A9A7552F2476AB6200F44FAC /* DistanceCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A7552E2476AB6200F44FAC /* DistanceCalculator.swift */; };
 		A9A755312477072E00F44FAC /* LogContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A755302477072E00F44FAC /* LogContext.swift */; };
-		A9E1141024857A9C00911EFA /* DistanceCoordinates.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E1140F24857A9C00911EFA /* DistanceCoordinates.swift */; };
-		A9F69CBF247FF31E00E05415 /* Accelermoters.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F69CBE247FF31E00E05415 /* Accelermoters.swift */; };
 		A9F69CC12480411D00E05415 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F69CC02480411D00E05415 /* WelcomeViewController.swift */; };
-		A9FF4E7524868026009FBA9C /* DistanceScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FF4E7424868026009FBA9C /* DistanceScanner.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,12 +33,9 @@
 		A9573220246C459C006D4CFF /* PreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
 		A9929E8C24757D1A00AC3358 /* ARKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ARKit.framework; path = System/Library/Frameworks/ARKit.framework; sourceTree = SDKROOT; };
 		A9929E8E2475A26D00AC3358 /* TapGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapGesture.swift; sourceTree = "<group>"; };
-		A9A7552E2476AB6200F44FAC /* DistanceNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistanceNode.swift; sourceTree = "<group>"; };
+		A9A7552E2476AB6200F44FAC /* DistanceCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistanceCalculator.swift; sourceTree = "<group>"; };
 		A9A755302477072E00F44FAC /* LogContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogContext.swift; sourceTree = "<group>"; };
-		A9E1140F24857A9C00911EFA /* DistanceCoordinates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistanceCoordinates.swift; sourceTree = "<group>"; };
-		A9F69CBE247FF31E00E05415 /* Accelermoters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Accelermoters.swift; sourceTree = "<group>"; };
 		A9F69CC02480411D00E05415 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
-		A9FF4E7424868026009FBA9C /* DistanceScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistanceScanner.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,12 +79,9 @@
 				A957321A246C3CB7006D4CFF /* Info.plist */,
 				A9573220246C459C006D4CFF /* PreviewView.swift */,
 				A9929E8E2475A26D00AC3358 /* TapGesture.swift */,
-				A9A7552E2476AB6200F44FAC /* DistanceNode.swift */,
+				A9A7552E2476AB6200F44FAC /* DistanceCalculator.swift */,
 				A9A755302477072E00F44FAC /* LogContext.swift */,
-				A9F69CBE247FF31E00E05415 /* Accelermoters.swift */,
 				A9F69CC02480411D00E05415 /* WelcomeViewController.swift */,
-				A9E1140F24857A9C00911EFA /* DistanceCoordinates.swift */,
-				A9FF4E7424868026009FBA9C /* DistanceScanner.swift */,
 			);
 			path = KeepYourDistance;
 			sourceTree = "<group>";
@@ -174,17 +165,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A9E1141024857A9C00911EFA /* DistanceCoordinates.swift in Sources */,
 				A9F69CC12480411D00E05415 /* WelcomeViewController.swift in Sources */,
-				A9A7552F2476AB6200F44FAC /* DistanceNode.swift in Sources */,
+				A9A7552F2476AB6200F44FAC /* DistanceCalculator.swift in Sources */,
 				A9573211246C3CB5006D4CFF /* ViewController.swift in Sources */,
 				A9573221246C459C006D4CFF /* PreviewView.swift in Sources */,
 				A9929E8F2475A26D00AC3358 /* TapGesture.swift in Sources */,
 				A957320D246C3CB5006D4CFF /* AppDelegate.swift in Sources */,
-				A9FF4E7524868026009FBA9C /* DistanceScanner.swift in Sources */,
 				A957320F246C3CB5006D4CFF /* SceneDelegate.swift in Sources */,
 				A9A755312477072E00F44FAC /* LogContext.swift in Sources */,
-				A9F69CBF247FF31E00E05415 /* Accelermoters.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

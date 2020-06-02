@@ -12,10 +12,10 @@ import Foundation
 import os.log
 
 /// Two SCNNode used to compare distance
-struct DistanceNode {
+final class DistanceCalculator {
     private let log = LogContext.distanceNodes
 
-    /// Scene view that Node that was tapped is added to
+    /// 'ARSCNView' Containing `SCNNode`
     private let sceneView: ARSCNView
 
     /// A SceneKit node added from being tapped
@@ -36,7 +36,7 @@ struct DistanceNode {
      - parameter at: The point that was tapped to add a node.
      - returns: The distance in inches to the orgian or nil if it was not added
      */
-    mutating func distanceTo(_ point: CGPoint) -> Int? {
+    func distanceTo(_ point: CGPoint) -> Int? {
         os_log("setTapped: %s",
                log: log,
                type: .debug,
@@ -64,21 +64,21 @@ struct DistanceNode {
     }
 
     private func filter(at location: CGPoint) -> ARHitTestResult? {
-        let histTest = sceneView.hitTest(location, types: [.featurePoint, .estimatedHorizontalPlane, .existingPlaneUsingGeometry])
+        let hitTest = sceneView.hitTest(location, types: [.featurePoint, .estimatedHorizontalPlane, .existingPlaneUsingGeometry])
 
         os_log("number of hits %d",
                log: log,
                type: .debug,
-               histTest.count)
+               hitTest.count)
 
-        if let resultForGeometryPlane = histTest.first(where: { $0.type == .existingPlaneUsingGeometry }) {
+        if let resultForGeometryPlane = hitTest.first(where: { $0.type == .existingPlaneUsingGeometry }) {
             os_log("Returning existingPlaneUsingGeometry",
                    log: log,
                    type: .debug)
             return resultForGeometryPlane
         }
 
-        histTest.forEach {
+        hitTest.forEach {
             switch $0.type {
             case .featurePoint:
                 print("featurePoint")
@@ -91,7 +91,7 @@ struct DistanceNode {
             }
         }
 
-        return histTest.last
+        return hitTest.last
     }
 
     private func pointToNode(_ point: CGPoint) -> SCNNode? {
