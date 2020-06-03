@@ -16,7 +16,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LDU-84-HDP">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="843"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="799"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="aUi-S3-6Xi">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="481.66666666666669"/>
@@ -180,10 +180,10 @@ Cg
                                 <viewLayoutGuide key="frameLayoutGuide" id="3IX-BI-cZo"/>
                             </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5tr-TR-aIq" userLabel="checkButton">
-                                <rect key="frame" x="0.0" y="843" width="414" height="53"/>
+                                <rect key="frame" x="20" y="799" width="374" height="63"/>
                                 <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="53" id="Vzi-ZB-zXu"/>
+                                    <constraint firstAttribute="height" constant="63" id="Vzi-ZB-zXu"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
                                 <state key="normal" title="Check Distance">
@@ -203,13 +203,14 @@ Cg
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="LDU-84-HDP" firstAttribute="bottom" secondItem="5tr-TR-aIq" secondAttribute="top" id="0QT-zr-60W"/>
-                            <constraint firstAttribute="trailing" secondItem="5tr-TR-aIq" secondAttribute="trailing" id="6uM-D6-GHO"/>
+                            <constraint firstAttribute="trailing" secondItem="5tr-TR-aIq" secondAttribute="trailing" constant="20" id="6uM-D6-GHO"/>
                             <constraint firstAttribute="trailing" secondItem="LDU-84-HDP" secondAttribute="trailing" id="7ej-ms-BrY"/>
                             <constraint firstItem="LDU-84-HDP" firstAttribute="leading" secondItem="lLF-97-ELF" secondAttribute="leading" id="9G4-8n-f8A"/>
-                            <constraint firstAttribute="bottom" secondItem="5tr-TR-aIq" secondAttribute="bottom" id="GIL-cF-kBc"/>
-                            <constraint firstItem="5tr-TR-aIq" firstAttribute="leading" secondItem="lLF-97-ELF" secondAttribute="leading" id="XCV-lE-5HW"/>
+                            <constraint firstItem="K2z-wJ-Zro" firstAttribute="bottom" secondItem="5tr-TR-aIq" secondAttribute="bottom" id="GIL-cF-kBc"/>
+                            <constraint firstItem="5tr-TR-aIq" firstAttribute="leading" secondItem="lLF-97-ELF" secondAttribute="leading" constant="20" id="XCV-lE-5HW"/>
                             <constraint firstItem="LDU-84-HDP" firstAttribute="top" secondItem="lLF-97-ELF" secondAttribute="top" id="sYa-Hm-xy1"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="K2z-wJ-Zro"/>
                     </view>
                     <navigationItem key="navigationItem" title="Social Distance" largeTitleDisplayMode="always" id="WOy-Ad-R1p"/>
                 </viewController>

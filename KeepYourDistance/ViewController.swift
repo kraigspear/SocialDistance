@@ -30,14 +30,11 @@ final class ViewController: UIViewController {
         distanceLabelPopulate = DistanceLabelPopulate(label: distanceLabel,
                                                       distanceCalculator: distanceCalculator,
                                                       sceneView: sceneView)
-
-        instructions = Instructions(instructionsStackView: instructionsStackView)
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         sinkToTapPublisher()
-        instructions.listenForTap()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -49,7 +46,6 @@ final class ViewController: UIViewController {
         pauseSession()
         tapGesture?.cancelGesture()
         tapGesture = nil
-        instructions.cancelListenForTap()
         super.viewWillDisappear(animated)
     }
 
@@ -120,51 +116,10 @@ final class ViewController: UIViewController {
         }
     }
 
-    // MARK: - Instructions
-
-    /// Instructions on how to use
-    @IBOutlet private var instructionsStackView: UIStackView!
-
-    private var instructions: Instructions!
-
-    final class Instructions {
-        private var instructionsTapCancel: AnyCancellable?
-        private var instructrionsTap: TapGesture?
-
-        private weak var instructionsStackView: UIStackView?
-
-        init(instructionsStackView: UIStackView) {
-            self.instructionsStackView = instructionsStackView
-        }
-
-        func listenForTap() {
-            guard let instructionsStackView = instructionsStackView else { return }
-
-            instructrionsTap = TapGesture(on: instructionsStackView)
-            instructionsTapCancel = instructrionsTap!.tapPublisher.sink { _ in
-                self.hideInstructions()
-            }
-        }
-
-        func cancelListenForTap() {
-            instructionsTapCancel = nil
-            instructrionsTap?.cancelGesture()
-            instructrionsTap = nil
-        }
-
-        private func hideInstructions() {
-            guard let instructionsStackView = instructionsStackView else { return }
-            UIView.animate(withDuration: 0.10, animations: { instructionsStackView.layer.opacity = 0.0 }) { _ in
-                instructionsStackView.isHidden = true
-                self.cancelListenForTap()
-            }
-        }
-    }
-
     // MARK: - ARKit - Setup
 
     private func setupARKit() {
-        precondition(sceneView.delegate == nil, "Delgate is not nil")
+        precondition(sceneView.delegate == nil, "Delegate is not nil")
         sceneView.delegate = self
         sceneView.showsStatistics = false
         sceneView.debugOptions = [.showWorldOrigin]
