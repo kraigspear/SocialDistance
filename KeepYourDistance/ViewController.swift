@@ -12,19 +12,51 @@ import Combine
 import UIKit
 
 final class ViewController: UIViewController {
-    /// Distance text to show around the scene node text
-    @IBOutlet private var distanceLabel: UILabel!
-    /// Instructions on how to use
-    @IBOutlet private var instructionsStackView: UIStackView!
-
     /// The ARKit scene view
     @IBOutlet var sceneView: ARSCNView!
 
-    /// Gesture to receive taps to indicate where to place a node for measurment
-    private var tapGesture: TapGesture?
-
     /// Model managing two ARKit scene nodes to measure distance
     private var distanceCalculator: DistanceCalculator!
+
+    // MARK: - Lifecycle
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        navigationController?.navigationBar.prefersLargeTitles = true
+
+        setupARKit()
+        distanceCalculator = DistanceCalculator(sceneView: sceneView)
+        distanceLabelPopulate = DistanceLabelPopulate(label: distanceLabel,
+                                                      distanceCalculator: distanceCalculator,
+                                                      sceneView: sceneView)
+
+        instructions = Instructions(instructionsStackView: instructionsStackView)
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        sinkToTapPublisher()
+        instructions.listenForTap()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        runSession()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        pauseSession()
+        tapGesture?.cancelGesture()
+        tapGesture = nil
+        instructions.cancelListenForTap()
+        super.viewWillDisappear(animated)
+    }
+
+    // MARK: - Distance Label
+
+    /// Distance text to show around the scene node text
+    @IBOutlet private var distanceLabel: UILabel!
 
     private final class DistanceLabelPopulate {
         private weak var label: UILabel?
@@ -74,79 +106,59 @@ final class ViewController: UIViewController {
 
     private var distanceLabelPopulate: DistanceLabelPopulate!
 
-    // MARK: - Lifecycle
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        navigationController?.navigationBar.prefersLargeTitles = true
-
-        setupARKit()
-        distanceCalculator = DistanceCalculator(sceneView: sceneView)
-        distanceLabelPopulate = DistanceLabelPopulate(label: distanceLabel,
-                                                      distanceCalculator: distanceCalculator,
-                                                      sceneView: sceneView)
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        sinkToTapPublisher()
-        sinkToInstructionsTapGesture()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        runSession()
-    }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        pauseSession()
-        tapGesture?.cancelGesture()
-        tapGesture = nil
-        cancelInstructionsTap()
-        super.viewWillDisappear(animated)
-    }
-
     // MARK: - Tap Gesture
+
+    /// Gesture to receive taps to indicate where to place a node for measurment
+    private var tapGesture: TapGesture?
 
     private var tapCancel: AnyCancellable?
     /// Listen for taps
     private func sinkToTapPublisher() {
         tapGesture = TapGesture(on: sceneView)
         tapCancel = tapGesture!.tapPublisher.sink { location in
-
-            if !self.instructionsStackView.isHidden {
-                self.hideInstructions()
-                return
-            }
-
             self.distanceLabelPopulate.updateText(at: location)
         }
     }
 
     // MARK: - Instructions
 
-    private var instructionsTapCancel: AnyCancellable?
-    private var instructrionsTap: TapGesture?
+    /// Instructions on how to use
+    @IBOutlet private var instructionsStackView: UIStackView!
 
-    private func sinkToInstructionsTapGesture() {
-        instructrionsTap = TapGesture(on: instructionsStackView)
-        instructionsTapCancel = instructrionsTap!.tapPublisher.sink { _ in
-            self.hideInstructions()
+    private var instructions: Instructions!
+
+    final class Instructions {
+        private var instructionsTapCancel: AnyCancellable?
+        private var instructrionsTap: TapGesture?
+
+        private weak var instructionsStackView: UIStackView?
+
+        init(instructionsStackView: UIStackView) {
+            self.instructionsStackView = instructionsStackView
         }
-    }
 
-    private func hideInstructions() {
-        UIView.animate(withDuration: 0.10, animations: { self.instructionsStackView.layer.opacity = 0.0 }) { _ in
-            self.instructionsStackView.isHidden = true
-            self.cancelInstructionsTap()
+        func listenForTap() {
+            guard let instructionsStackView = instructionsStackView else { return }
+
+            instructrionsTap = TapGesture(on: instructionsStackView)
+            instructionsTapCancel = instructrionsTap!.tapPublisher.sink { _ in
+                self.hideInstructions()
+            }
         }
-    }
 
-    private func cancelInstructionsTap() {
-        instructionsTapCancel = nil
-        instructrionsTap?.cancelGesture()
-        instructrionsTap = nil
+        func cancelListenForTap() {
+            instructionsTapCancel = nil
+            instructrionsTap?.cancelGesture()
+            instructrionsTap = nil
+        }
+
+        private func hideInstructions() {
+            guard let instructionsStackView = instructionsStackView else { return }
+            UIView.animate(withDuration: 0.10, animations: { instructionsStackView.layer.opacity = 0.0 }) { _ in
+                instructionsStackView.isHidden = true
+                self.cancelListenForTap()
+            }
+        }
     }
 
     // MARK: - ARKit - Setup
@@ -156,7 +168,6 @@ final class ViewController: UIViewController {
         sceneView.delegate = self
         sceneView.showsStatistics = false
         sceneView.debugOptions = [.showWorldOrigin]
-        // sceneView.debugOptions = [.showConstraints, .showLightExtents, .showFeaturePoints, .showWorldOrigin]
     }
 
     private func runSession() {
