@@ -30,10 +30,10 @@
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="edn-TL-pHo" userLabel="instructionsLabel">
                                                 <rect key="frame" x="2.3333333333333428" y="224.00000000000003" width="409.33333333333326" height="257.66666666666674"/>
                                                 <attributedString key="attributedText">
-                                                    <fragment content="When ready, extend your arm and tap at the location to measure distance. ">
+                                                    <fragment content="When ready, extend your arm and tap at base of the the location to measure distance. ">
                                                         <attributes>
                                                             <color key="NSBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <color key="NSColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <font key="NSFont" size="24" name="AvenirNext-DemiBold"/>
                                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
                                                         </attributes>
@@ -44,7 +44,7 @@ Cg
 </string>
                                                         <attributes>
                                                             <color key="NSBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <color key="NSColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <font key="NSFont" size="24" name="HelveticaNeue"/>
                                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
                                                         </attributes>
@@ -55,7 +55,7 @@ Cg
 </string>
                                                         <attributes>
                                                             <color key="NSBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <color key="NSColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <font key="NSFont" size="17" name="HelveticaNeue"/>
                                                             <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
                                                         </attributes>
@@ -63,60 +63,10 @@ Cg
                                                     <fragment>
                                                         <string key="content">The distance will be between where you tapped and the device's location when you touched "Checked Distance."
 
-</string>
+Accuracy is depending on lighting and the ability of the device to detect the horizontal plane.</string>
                                                         <attributes>
                                                             <color key="NSBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <font key="NSFont" size="17" name="AvenirNext-Regular"/>
-                                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" headIndent="36" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
-                                                                <tabStops>
-                                                                    <textTab alignment="left" location="11">
-                                                                        <options/>
-                                                                    </textTab>
-                                                                    <textTab alignment="natural" location="36">
-                                                                        <options/>
-                                                                    </textTab>
-                                                                    <textTab alignment="left" location="56">
-                                                                        <options/>
-                                                                    </textTab>
-                                                                    <textTab alignment="left" location="84">
-                                                                        <options/>
-                                                                    </textTab>
-                                                                    <textTab alignment="left" location="112">
-                                                                        <options/>
-                                                                    </textTab>
-                                                                    <textTab alignment="left" location="140">
-                                                                        <options/>
-                                                                    </textTab>
-                                                                    <textTab alignment="left" location="168">
-                                                                        <options/>
-                                                                    </textTab>
-                                                                    <textTab alignment="left" location="196">
-                                                                        <options/>
-                                                                    </textTab>
-                                                                    <textTab alignment="left" location="224">
-                                                                        <options/>
-                                                                    </textTab>
-                                                                    <textTab alignment="left" location="252">
-                                                                        <options/>
-                                                                    </textTab>
-                                                                    <textTab alignment="left" location="280">
-                                                                        <options/>
-                                                                    </textTab>
-                                                                    <textTab alignment="left" location="308">
-                                                                        <options/>
-                                                                    </textTab>
-                                                                    <textTab alignment="left" location="336">
-                                                                        <options/>
-                                                                    </textTab>
-                                                                </tabStops>
-                                                            </paragraphStyle>
-                                                        </attributes>
-                                                    </fragment>
-                                                    <fragment content="Accuracy is depending on lighting and the ability of the device to detect the horizontal plane.">
-                                                        <attributes>
-                                                            <color key="NSBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <color key="NSColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <font key="NSFont" size="17" name="AvenirNext-Regular"/>
                                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" headIndent="36" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
                                                                 <tabStops>
@@ -180,7 +130,7 @@ Cg
                                 <viewLayoutGuide key="frameLayoutGuide" id="3IX-BI-cZo"/>
                             </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5tr-TR-aIq" userLabel="checkButton">
-                                <rect key="frame" x="20" y="799" width="374" height="63"/>
+                                <rect key="frame" x="0.0" y="799" width="414" height="63"/>
                                 <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="63" id="Vzi-ZB-zXu"/>
@@ -189,12 +139,6 @@ Cg
                                 <state key="normal" title="Check Distance">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="8"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
-                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <segue destination="BYZ-38-t0r" kind="show" id="Us0-US-PVe"/>
                                 </connections>
@@ -203,11 +147,11 @@ Cg
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="LDU-84-HDP" firstAttribute="bottom" secondItem="5tr-TR-aIq" secondAttribute="top" id="0QT-zr-60W"/>
-                            <constraint firstAttribute="trailing" secondItem="5tr-TR-aIq" secondAttribute="trailing" constant="20" id="6uM-D6-GHO"/>
+                            <constraint firstAttribute="trailing" secondItem="5tr-TR-aIq" secondAttribute="trailing" id="6uM-D6-GHO"/>
                             <constraint firstAttribute="trailing" secondItem="LDU-84-HDP" secondAttribute="trailing" id="7ej-ms-BrY"/>
                             <constraint firstItem="LDU-84-HDP" firstAttribute="leading" secondItem="lLF-97-ELF" secondAttribute="leading" id="9G4-8n-f8A"/>
                             <constraint firstItem="K2z-wJ-Zro" firstAttribute="bottom" secondItem="5tr-TR-aIq" secondAttribute="bottom" id="GIL-cF-kBc"/>
-                            <constraint firstItem="5tr-TR-aIq" firstAttribute="leading" secondItem="lLF-97-ELF" secondAttribute="leading" constant="20" id="XCV-lE-5HW"/>
+                            <constraint firstItem="5tr-TR-aIq" firstAttribute="leading" secondItem="lLF-97-ELF" secondAttribute="leading" id="XCV-lE-5HW"/>
                             <constraint firstItem="LDU-84-HDP" firstAttribute="top" secondItem="lLF-97-ELF" secondAttribute="top" id="sYa-Hm-xy1"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="K2z-wJ-Zro"/>

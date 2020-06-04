@@ -76,6 +76,7 @@ final class ViewController: UIViewController {
                 guard let label = self.label else { return }
 
                 label.center = CGPoint(x: CGFloat(screenCoordinate.x), y: CGFloat(screenCoordinate.y))
+                label.sizeToFit()
 
                 label.isHidden = (screenCoordinate.z > 1)
 
@@ -97,6 +98,7 @@ final class ViewController: UIViewController {
             sceneNodeTextFrame.origin = location
             label.frame = sceneNodeTextFrame
             label.isHidden = false
+            label.sizeToFit()
         }
     }
 
@@ -122,7 +124,6 @@ final class ViewController: UIViewController {
         precondition(sceneView.delegate == nil, "Delegate is not nil")
         sceneView.delegate = self
         sceneView.showsStatistics = false
-        sceneView.debugOptions = [.showWorldOrigin]
     }
 
     private func runSession() {
