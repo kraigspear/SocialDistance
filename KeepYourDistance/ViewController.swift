@@ -13,7 +13,7 @@ import UIKit
 
 final class ViewController: UIViewController {
     /// The ARKit scene view
-    @IBOutlet var sceneView: ARSCNView!
+    @IBOutlet weak var sceneView: ARSCNView!
 
     /// Model managing two ARKit scene nodes to measure distance
     private var distanceCalculator: DistanceCalculator!
@@ -31,7 +31,7 @@ final class ViewController: UIViewController {
                                                       distanceCalculator: distanceCalculator,
                                                       sceneView: sceneView)
     }
-
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         sinkToTapPublisher()
@@ -44,6 +44,7 @@ final class ViewController: UIViewController {
 
     override func viewWillDisappear(_ animated: Bool) {
         pauseSession()
+        tapCancel = nil
         tapGesture?.cancelGesture()
         tapGesture = nil
         super.viewWillDisappear(animated)
@@ -130,10 +131,33 @@ final class ViewController: UIViewController {
         let configuration = ARWorldTrackingConfiguration()
         configuration.planeDetection = .horizontal
         sceneView.session.run(configuration)
+        addBottomShape()
     }
 
     private func pauseSession() {
         sceneView.session.pause()
+        sceneView.removeFromSuperview()
+    }
+    
+    //MARK: - Add Bottom Shape
+    
+    private func addBottomShape() {
+        
+        let node = SCNNode()
+        
+      //  let radius: CGFloat = 7.0
+        let sixFootMeters: CGFloat = (1.8288 * CGFloat.pi) - 2.0
+        
+        let sphere = SCNSphere(radius: sixFootMeters)
+        let material = SCNMaterial()
+        material.diffuse.contents = UIColor.red.withAlphaComponent(0.9)
+        sphere.firstMaterial = material
+        
+        node.geometry = sphere
+        node.position = SCNVector3(x: 0.0, y: -8.0, z: -3.5)
+        //node.position = SCNVector3(x: 0.0, y: -5.0, z: -2.0)
+        sceneView.scene.rootNode.addChildNode(node)
+        
     }
 
     // MARK: - Orientation

@@ -120,8 +120,7 @@ extension SCNNode {
 
 extension SCNVector3 {
     func toSphere() -> SCNNode {
-        // Creates an SCNSphere with a radius of 0.4
-        let sphere = SCNSphere(radius: 0.01)
+        let sphere = SCNSphere(radius: 0.03)
         // Converts the sphere into an SCNNode
         let node = SCNNode(geometry: sphere)
         // Positions the node based on the passed in position
