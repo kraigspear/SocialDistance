@@ -23,5 +23,6 @@ Depth-Map showing the brighter pixels as the closest, the darker as the furthest
 CoreMotion is the framework that provides information from device sensors related to the motion of the device. 
 
 By overlaying a view on top of camera output to show distance based on the tilt of the device, we can provide an illusion of a circle encompassing six feet. 
-This method might work, but without more devices, it isn't feasible to test thoroughly. 
 
+
+![Alt Text](Markdown/CoreMotion.gif)
