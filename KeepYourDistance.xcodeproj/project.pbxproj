@@ -14,16 +14,16 @@
 		A9573216246C3CB7006D4CFF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9573215246C3CB7006D4CFF /* Assets.xcassets */; };
 		A9573219246C3CB7006D4CFF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9573217246C3CB7006D4CFF /* LaunchScreen.storyboard */; };
 		A9573221246C459C006D4CFF /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9573220246C459C006D4CFF /* PreviewView.swift */; };
+		A9801178248A7B500099F223 /* GridNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9801177248A7B500099F223 /* GridNode.swift */; };
 		A9929E8D24757D1A00AC3358 /* ARKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9929E8C24757D1A00AC3358 /* ARKit.framework */; };
 		A9929E8F2475A26D00AC3358 /* TapGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9929E8E2475A26D00AC3358 /* TapGesture.swift */; };
-		A9A7552F2476AB6200F44FAC /* DistanceNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A7552E2476AB6200F44FAC /* DistanceNode.swift */; };
+		A9A7552F2476AB6200F44FAC /* DistanceCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A7552E2476AB6200F44FAC /* DistanceCalculator.swift */; };
 		A9A755312477072E00F44FAC /* LogContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A755302477072E00F44FAC /* LogContext.swift */; };
-		A9F69CBF247FF31E00E05415 /* Accelermoters.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F69CBE247FF31E00E05415 /* Accelermoters.swift */; };
 		A9F69CC12480411D00E05415 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F69CC02480411D00E05415 /* WelcomeViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		A9573209246C3CB5006D4CFF /* KeepYourDistance.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KeepYourDistance.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A9573209246C3CB5006D4CFF /* ARDistance.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARDistance.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A957320C246C3CB5006D4CFF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A957320E246C3CB5006D4CFF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		A9573210246C3CB5006D4CFF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -32,11 +32,11 @@
 		A9573218246C3CB7006D4CFF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A957321A246C3CB7006D4CFF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A9573220246C459C006D4CFF /* PreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
+		A9801177248A7B500099F223 /* GridNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridNode.swift; sourceTree = "<group>"; };
 		A9929E8C24757D1A00AC3358 /* ARKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ARKit.framework; path = System/Library/Frameworks/ARKit.framework; sourceTree = SDKROOT; };
 		A9929E8E2475A26D00AC3358 /* TapGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapGesture.swift; sourceTree = "<group>"; };
-		A9A7552E2476AB6200F44FAC /* DistanceNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistanceNode.swift; sourceTree = "<group>"; };
+		A9A7552E2476AB6200F44FAC /* DistanceCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistanceCalculator.swift; sourceTree = "<group>"; };
 		A9A755302477072E00F44FAC /* LogContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogContext.swift; sourceTree = "<group>"; };
-		A9F69CBE247FF31E00E05415 /* Accelermoters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Accelermoters.swift; sourceTree = "<group>"; };
 		A9F69CC02480411D00E05415 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -64,7 +64,7 @@
 		A957320A246C3CB5006D4CFF /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A9573209246C3CB5006D4CFF /* KeepYourDistance.app */,
+				A9573209246C3CB5006D4CFF /* ARDistance.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -72,6 +72,7 @@
 		A957320B246C3CB5006D4CFF /* KeepYourDistance */ = {
 			isa = PBXGroup;
 			children = (
+				A9801176248A7B400099F223 /* Grid */,
 				A957320C246C3CB5006D4CFF /* AppDelegate.swift */,
 				A957320E246C3CB5006D4CFF /* SceneDelegate.swift */,
 				A9573210246C3CB5006D4CFF /* ViewController.swift */,
@@ -81,12 +82,19 @@
 				A957321A246C3CB7006D4CFF /* Info.plist */,
 				A9573220246C459C006D4CFF /* PreviewView.swift */,
 				A9929E8E2475A26D00AC3358 /* TapGesture.swift */,
-				A9A7552E2476AB6200F44FAC /* DistanceNode.swift */,
+				A9A7552E2476AB6200F44FAC /* DistanceCalculator.swift */,
 				A9A755302477072E00F44FAC /* LogContext.swift */,
-				A9F69CBE247FF31E00E05415 /* Accelermoters.swift */,
 				A9F69CC02480411D00E05415 /* WelcomeViewController.swift */,
 			);
 			path = KeepYourDistance;
+			sourceTree = "<group>";
+		};
+		A9801176248A7B400099F223 /* Grid */ = {
+			isa = PBXGroup;
+			children = (
+				A9801177248A7B500099F223 /* GridNode.swift */,
+			);
+			path = Grid;
 			sourceTree = "<group>";
 		};
 		A9929E8B24757D1A00AC3358 /* Frameworks */ = {
@@ -114,7 +122,7 @@
 			);
 			name = KeepYourDistance;
 			productName = KeepYourDistance;
-			productReference = A9573209246C3CB5006D4CFF /* KeepYourDistance.app */;
+			productReference = A9573209246C3CB5006D4CFF /* ARDistance.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -169,14 +177,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				A9F69CC12480411D00E05415 /* WelcomeViewController.swift in Sources */,
-				A9A7552F2476AB6200F44FAC /* DistanceNode.swift in Sources */,
+				A9801178248A7B500099F223 /* GridNode.swift in Sources */,
+				A9A7552F2476AB6200F44FAC /* DistanceCalculator.swift in Sources */,
 				A9573211246C3CB5006D4CFF /* ViewController.swift in Sources */,
 				A9573221246C459C006D4CFF /* PreviewView.swift in Sources */,
 				A9929E8F2475A26D00AC3358 /* TapGesture.swift in Sources */,
 				A957320D246C3CB5006D4CFF /* AppDelegate.swift in Sources */,
 				A957320F246C3CB5006D4CFF /* SceneDelegate.swift in Sources */,
 				A9A755312477072E00F44FAC /* LogContext.swift in Sources */,
-				A9F69CBF247FF31E00E05415 /* Accelermoters.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -321,16 +329,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = FUNW4GUS24;
+				DEVELOPMENT_TEAM = 66V249GP6S;
 				INFOPLIST_FILE = KeepYourDistance/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.spearware.KeepYourDistance;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.dornerworks.ARDistance;
+				PRODUCT_NAME = ARDistance;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -339,16 +347,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = FUNW4GUS24;
+				DEVELOPMENT_TEAM = 66V249GP6S;
 				INFOPLIST_FILE = KeepYourDistance/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.spearware.KeepYourDistance;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.dornerworks.ARDistance;
+				PRODUCT_NAME = ARDistance;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
