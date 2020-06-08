@@ -145,7 +145,6 @@ final class ViewController: UIViewController {
         
         let node = SCNNode()
         
-      //  let radius: CGFloat = 7.0
         let sixFootMeters: CGFloat = (1.8288 * CGFloat.pi) - 2.0
         
         let sphere = SCNSphere(radius: sixFootMeters)
@@ -155,8 +154,32 @@ final class ViewController: UIViewController {
         
         node.geometry = sphere
         node.position = SCNVector3(x: 0.0, y: -8.0, z: -3.5)
-        //node.position = SCNVector3(x: 0.0, y: -5.0, z: -2.0)
         sceneView.scene.rootNode.addChildNode(node)
+    }
+    
+    //MARK: - Grid
+    
+    private let planeGrids = PlaneGrids()
+    
+    /// Grids that show what planes have been detected.
+    private final class PlaneGrids {
+        /// GridNodes that have been detected. Stored so that the grids can be updated
+        private var grids: [GridNode] = []
+        
+        func add(planeAnchor: ARPlaneAnchor, to node: SCNNode) {
+            let gridNode = GridNode(anchor: planeAnchor)
+            grids.append(gridNode)
+            node.addChildNode(gridNode)
+        }
+        
+        func update(planeAnchor: ARPlaneAnchor) {
+            
+            guard let foundGrid = grids.first(where: { $0.anchor.identifier == planeAnchor.identifier } ) else {
+                return
+            }
+            
+            foundGrid.update(anchor: planeAnchor)
+        }
         
     }
 
@@ -172,5 +195,25 @@ final class ViewController: UIViewController {
 extension ViewController: ARSCNViewDelegate {
     func renderer(_: SCNSceneRenderer, updateAtTime _: TimeInterval) {
         distanceLabelPopulate.updatePosition()
+    }
+    
+    func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
+        
+        guard let planeAnchor = anchor as? ARPlaneAnchor else {
+            assertionFailure("ARPlaneAnchor expected?")
+            return
+        }
+
+        planeGrids.add(planeAnchor: planeAnchor, to: node)
+    }
+    
+    func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
+        
+        guard let planeAnchor = anchor as? ARPlaneAnchor else {
+            assertionFailure("ARPlaneAnchor expected?")
+            return
+        }
+        
+        planeGrids.update(planeAnchor: planeAnchor)
     }
 }
