@@ -1,0 +1,15 @@
+{
+  "images" : [
+    {
+      "filename" : "dorner-works-full-icon-main-flat-CROPPED_light.pdf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "properties" : {
+    "preserves-vector-representation" : true
+  }
+}
