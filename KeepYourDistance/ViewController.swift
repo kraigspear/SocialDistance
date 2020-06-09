@@ -145,15 +145,16 @@ final class ViewController: UIViewController {
         
         let node = SCNNode()
         
-        let sixFootMeters: CGFloat = (1.8288 * CGFloat.pi) - 2.0
+        let sixFeetInCenimeters: CGFloat = 574.2432
+        let radius: CGFloat = sixFeetInCenimeters / 100.0
         
-        let sphere = SCNSphere(radius: sixFootMeters)
+        let sphere = SCNSphere(radius: radius)
         let material = SCNMaterial()
         material.diffuse.contents = UIColor.red.withAlphaComponent(0.9)
         sphere.firstMaterial = material
         
         node.geometry = sphere
-        node.position = SCNVector3(x: 0.0, y: -8.0, z: -3.5)
+        node.position = SCNVector3(x: 0.0, y: -8.0, z: 0.0)
         sceneView.scene.rootNode.addChildNode(node)
     }
     
