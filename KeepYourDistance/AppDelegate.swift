@@ -7,10 +7,19 @@
 //
 
 import UIKit
+import AppCenter
+import AppCenterAnalytics
+import AppCenterCrashes
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+        MSAppCenter.start("50a1acab-36cb-4bdc-afb2-53ee20d49b21", withServices:[
+          MSAnalytics.self,
+          MSCrashes.self
+        ])
+        
         let textColor = [NSAttributedString.Key.foregroundColor: UIColor.white]
         UINavigationBar.appearance().titleTextAttributes = textColor
 
